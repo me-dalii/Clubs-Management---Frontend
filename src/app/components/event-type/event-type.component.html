@@ -87,6 +87,8 @@
 [style]="{width: '70%'}" class="p-fluid">
 <div class="text-500 mb-5">Please complete all required fields marked with an asterisk (*).</div>
 <ng-template pTemplate="content">
+
+  
 <form [formGroup]="eventTypeForm" class="grid">
   <!-- ---hidden--- -->
   <div class="field">
@@ -133,8 +135,18 @@
 [style]="{width: '40%'}" class="p-fluid">
 <p>Are you sure that you want to proceed?</p>
 <ng-template pTemplate="footer">
-    <p-button icon="pi pi-check" (click)="displayBasic=false" label="Confirm" styleClass="p-button-text"></p-button>
     <p-button icon="pi pi-times" (click)="closeEventTypeDialog()" label="Abort" styleClass="p-button-text"></p-button>
+    <p-button icon="pi pi-check" (click)="confirmDeleteEventType()" label="Confirm" styleClass="p-button-text"></p-button>
+
+</ng-template>
+</p-dialog>
+
+<p-dialog header="Confirm Delete" [(visible)]="deleteEventTypeDialog" [modal]="true"
+[style]="{width: '40%'}" class="p-fluid">
+<p>Are you sure that you want to proceed?</p>
+<ng-template pTemplate="footer">
+    <p-button icon="pi pi-times" (click)="closeEventTypeDialog()" label="Abort" styleClass="p-button-text"></p-button>
+    <p-button icon="pi pi-check" (click)="confirmDeleteEventTypeSelected()" label="Confirm" styleClass="p-button-text"></p-button>
 
 </ng-template>
 </p-dialog>

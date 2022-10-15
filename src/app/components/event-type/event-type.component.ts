@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 
 import { MessageService } from 'primeng/api';
-import { title } from 'process';
 
 import { EventType } from 'src/app/models/EventType';
 import { EventTypeService } from 'src/services/event-type.service';
@@ -36,10 +35,7 @@ export class EventTypeComponent implements OnInit {
     })
   }
 
-  deleteSelectedEventTypes() {
-
-
-  }
+  
 
   getEventTypes(){
     this.eventTypeService.getEventTypes().subscribe({
@@ -54,10 +50,50 @@ export class EventTypeComponent implements OnInit {
 
   }
 
-  deleteEventType(eventType){
+  
+  deleteEventType(eventType : EventType){
+    this.eventType = eventType;
+    this.deleteEventTypeDialog = true;
+  }
+
+  deleteSelectedEventTypes() {
     this.deleteEventTypeDialog = true ;
+    
+  }
+
+
+
+  confirmDeleteEventType(){
+    this.eventTypeService.deleteEventType(this.eventType.id).subscribe({
+      next: (v) => 
+      {
+        this.getEventTypes();
+        this.messageService.add({ severity: 'success', summary: 'Successful', detail: "L'Attachement a été Supprimés", life: 3000 });
+      },
+      error: (e) => this.messageService.add({ severity: 'error', summary: 'Erreur', detail: 'Delete Failed', life: 3000 }),
+      complete: () => this.deleteEventTypeDialog = false
+    })
+    this.eventType = {};
+  }
+  confirmDeleteEventTypeSelected(){
+
+
+for (let s of this.selectedEventTypes) {
+  this.eventTypeService.deleteEventType(s.id).subscribe({
+    next: (v) => this.getEventTypes(),
+    error: (e) => this.messageService.add({ severity: 'error', summary: 'Erreur', detail: 'Delete Failed', life: 3000 }),
+  })
+}
+this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Deleted Successfully', life: 3000 });
+this.selectedEventTypes = null;
+
+this.deleteEventTypeDialog = false ;
+this.eventTypeForm.reset();
+this.getEventTypes();
+
 
   }
+
 
   hideDialog(){
     this.eventTypeDialog = false ;
