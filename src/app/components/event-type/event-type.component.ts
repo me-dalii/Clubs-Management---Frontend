@@ -20,6 +20,7 @@ export class EventTypeComponent implements OnInit {
   eventTypeForm : FormGroup ;
   eventType: EventType ;
   deleteEventTypeDialog: boolean;
+  deleteEventTypesDialog : boolean;
 
 
   constructor(private eventTypeService : EventTypeService, private messageService : MessageService) { }
@@ -57,9 +58,10 @@ export class EventTypeComponent implements OnInit {
   }
 
   deleteSelectedEventTypes() {
-    this.deleteEventTypeDialog = true ;
+    this.deleteEventTypesDialog = true ;
     
   }
+  
 
 
 

@@ -202,7 +202,7 @@
   <p-dialog [(visible)]="deleteTeacherDialog" header="Confirm" [modal]="true" [style]="{width:'40%'}">
     <div class="flex align-items-center justify-content-center">
       <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
-      <span *ngIf="teacher">Are you sure you want to delete <b>{{teacher?.firstName + " " + teacher?.lastName}}</b>?</span>
+      <span *ngIf="teacher">Are you sure you want to delete <b>{{teacher?.firstName + " " + teacher?.lastName + ""}}</b>?</span>
     </div>
     <ng-template pTemplate="footer">
       <button pButton pRipple icon="pi pi-times" class="p-button-text" label="No"
@@ -220,7 +220,6 @@
     <ng-template pTemplate="footer">
       <button pButton pRipple icon="pi pi-times" class="p-button-text" label="No"
         (click)="deleteTeachersDialog = false"></button>
-      <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Yes"
-        (click)="confirmDeleteSelected()"></button>
+      <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Yes" (click)="confirmDeleteSelected()"></button>
     </ng-template>
   </p-dialog>

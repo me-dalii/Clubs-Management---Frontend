@@ -133,7 +133,9 @@
 
 <p-dialog header="Confirm Delete" [(visible)]="deleteEventTypeDialog" [modal]="true"
 [style]="{width: '40%'}" class="p-fluid">
-<p>Are you sure that you want to proceed?</p>
+<i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+
+<span *ngIf="eventType">Are you sure that you want to delete <b>{{eventType?.title }}</b> ?</span>
 <ng-template pTemplate="footer">
     <p-button icon="pi pi-times" (click)="closeEventTypeDialog()" label="Abort" styleClass="p-button-text"></p-button>
     <p-button icon="pi pi-check" (click)="confirmDeleteEventType()" label="Confirm" styleClass="p-button-text"></p-button>
@@ -141,9 +143,11 @@
 </ng-template>
 </p-dialog>
 
-<p-dialog header="Confirm Delete" [(visible)]="deleteEventTypeDialog" [modal]="true"
+<p-dialog header="Confirm Delete" [(visible)]="deleteEventTypesDialog" [modal]="true"
 [style]="{width: '40%'}" class="p-fluid">
-<p>Are you sure that you want to proceed?</p>
+<i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+
+<span>Are you sure that you want to delete the selected event types ?</span>
 <ng-template pTemplate="footer">
     <p-button icon="pi pi-times" (click)="closeEventTypeDialog()" label="Abort" styleClass="p-button-text"></p-button>
     <p-button icon="pi pi-check" (click)="confirmDeleteEventTypeSelected()" label="Confirm" styleClass="p-button-text"></p-button>
