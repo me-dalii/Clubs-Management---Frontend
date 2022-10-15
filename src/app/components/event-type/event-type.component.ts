@@ -63,12 +63,16 @@ export class EventTypeComponent implements OnInit {
     this.eventTypeDialog = false ;
 
   }
+  closeEventTypeDialog(){
+    this.deleteEventTypeDialog = false ;
+  }
   saveEventType(){
     this.eventType = {
       "id" : this.eventTypeForm.get("id").value,
       "title" : this.eventTypeForm.get("title").value,
       "description" : this.eventTypeForm.get("description").value
     }
+  
     
     this.eventTypeService.saveEventType(this.eventType).subscribe({
       next: (response: EventType) => {
