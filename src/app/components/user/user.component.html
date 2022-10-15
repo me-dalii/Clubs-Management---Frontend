@@ -1,0 +1,236 @@
+<p-toast></p-toast>
+<div class="grid">
+  <div class="col-12">
+    <div class="card">
+      <p-toolbar styleClass="mb-1">
+        <ng-template pTemplate="left">
+          <div class="my-2">
+            <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success mr-2"
+              (click)="openNew()"></button>
+            <button pButton pRipple label="Delete" icon="pi pi-trash" class="p-button-danger"
+              (click)="deleteSelectedUsers()" [disabled]="!selectedUsers|| !selectedUsers?.length"></button>
+          </div>
+        </ng-template>
+      </p-toolbar>
+      <p-table #dt [value]="users" responsiveLayout="scroll"
+        [globalFilterFields]="['firstName,lastName,cin']" [rows]="10" [paginator]="true" [rowsPerPageOptions]="[10,20,30]"
+        [showCurrentPageReport]="true" currentPageReportTemplate="Affichage {first} à {last} de {totalRecords} entrées"
+        [(selection)]="selectedUsers" selectionMode="multiple" [rowHover]="true" dataKey="id">
+        <ng-template pTemplate="caption">
+          <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
+            <h5 class="m-0">Manage Users</h5>
+            <span class="block mt-2 md:mt-0 p-input-icon-left">
+              <i class="pi pi-search"></i>
+              <input pInputText Item="text" (input)="dt.filterGlobal($event.target.value, 'contains')"
+                placeholder="Search..."/>
+            </span>
+          </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+          <tr>
+            <th style="width: 3rem">
+              <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+            </th>
+            <th pSortableColumn="cin"><div class="flex justify-content-center">CIN<p-sortIcon field="cin"></p-sortIcon></div></th>
+            <th pSortableColumn="firstName"><div class="flex justify-content-center">First Name<p-sortIcon field="firstName"></p-sortIcon></div>
+            </th>
+            <th pSortableColumn="lastName"><div class="flex justify-content-center">Last Name<p-sortIcon field="lastName"></p-sortIcon></div>
+            </th>
+            <th pSortableColumn="email"><div class="flex justify-content-center">Email<p-sortIcon field="email"></p-sortIcon></div>
+            </th>
+            <th pSortableColumn="phone"><div class="flex justify-content-center">Phone<p-sortIcon field="phone"></p-sortIcon></div>
+            </th>
+            <th></th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-user>
+          <tr>
+            <tr>
+              <td>
+                  <p-tableCheckbox [value]="user"></p-tableCheckbox>
+              </td>
+              <td style="width:20%; min-width:10rem;">
+                  <span class="p-column-title">cin</span>
+                  <div class="flex justify-content-center text-center">{{user?.cin}}</div>
+              </td>
+              <td style="width:20%; min-width:10rem;">
+                <span class="p-column-title">firstName</span>
+                <div class="flex justify-content-center text-center">{{user?.firstName}}</div>
+              </td>
+              <td style="width:20%; min-width:10rem;">
+                    <span class="p-column-title">lastName</span>
+                    <div class="flex justify-content-center text-center">{{user?.lastName}}</div>
+              </td>
+            <td style="width:20%; min-width:10rem;">
+                    <span class="p-column-title">email</span>
+                    <div class="flex justify-content-center text-center">{{user?.email}}</div>
+            </td>
+            <td style="width:20%; min-width:10rem;">
+                    <span class="p-column-title">phone</span>
+                    <div class="flex justify-content-center text-center">{{user?.phone}}</div>
+            </td>
+              <td style="width:30%; min-width:10rem;">
+                  <div class="flex justify-content-center text-center">
+                      <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-info mr-2"
+                      (click)="editUser(user)"></button>
+                        <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-danger"
+                      (click)="deleteUser(user)"></button>
+                  </div>
+                </td>
+          </tr>
+        </ng-template>
+        <!-- empty table message-->
+        <ng-template pTemplate="emptymessage">
+          <tr>
+            <td colspan="6" class="text-center">No users found.</td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+</div>
+
+  <p-dialog header="User Details" [(visible)]="userDialog" [modal]="true"
+    [style]="{width: '70%'}" class="p-fluid">
+    <div class="text-500 mb-5">Please complete all required fields marked with an asterisk (*).</div>
+    <ng-template pTemplate="content">
+    <form [formGroup]="userForm" class="grid">
+      <!-- ---hidden--- -->
+      <div class="field">
+        <input Item="text" hidden pInputText id="code" formControlName="id" />
+      </div>
+
+      <div class="field col-12">
+        <label for="cin">CIN *</label>
+        <input Item="text" pInputText id="cin" formControlName="cin" placeholder="Identity Card Number" required />
+        <div *ngIf="(userForm.get('cin').invalid && userForm.get('cin').dirty)">
+          <small class="ng-dirty ng-invalid" *ngIf="userForm.get('cin').hasError('required')">
+            Obligatory.
+          </small>
+          <small class="ng-dirty ng-invalid" *ngIf="userForm.get('cin').hasError('pattern')">
+            Invalid.
+          </small>
+        </div>
+      </div>
+
+      <div class="field col-6">
+        <label for="firstName">First Name *</label>
+        <input Item="text" pInputText id="firstName" formControlName="firstName" placeholder="firstName" required />
+        <div *ngIf="(userForm.get('firstName').invalid && userForm.get('firstName').dirty)">
+          <small class="ng-dirty ng-invalid" *ngIf="userForm.get('firstName').hasError('required')">
+            Obligatory.
+          </small>
+          <small class="ng-dirty ng-invalid" *ngIf="userForm.get('firstName').hasError('pattern')">
+            Invalid.
+          </small>
+        </div>
+      </div>
+
+      <div class="field col-6">
+        <label for="lastName">Last Name *</label>
+        <input Item="text" pInputText id="lastName" formControlName="lastName" placeholder="lastName" required />
+        <div *ngIf="(userForm.get('lastName').invalid && userForm.get('lastName').dirty)">
+          <small class="ng-dirty ng-invalid" *ngIf="userForm.get('lastName').hasError('required')">
+            Obligatory.
+          </small>
+          <small class="ng-dirty ng-invalid" *ngIf="userForm.get('lastName').hasError('pattern')">
+            Invalid.
+          </small>
+        </div>
+      </div>
+
+      <div class="field col-9">
+        <label for="dob">Date of Birth *</label>
+        <p-calendar id="dob" appendTo="body" [showIcon]="true" dateFormat="dd/mm/yy" [showButtonBar]="true" placeholder="jj/MM/aaaa"
+                  formControlName="dob"></p-calendar>
+        <div *ngIf="(userForm.get('dob').invalid && userForm.get('dob').dirty)">
+          <small class="ng-dirty ng-invalid" *ngIf="userForm.get('dob').hasError('required')">
+            Obligatory.
+          </small>
+          <small class="ng-dirty ng-invalid" *ngIf="userForm.get('dob').hasError('pattern')">
+            Invalid.
+          </small>
+        </div>
+      </div>
+
+      <div class="field col-3">
+        <label for="gender">Gender *</label>
+        <p-dropdown id="gender" appendTo="body" [options]="genders" placeholder="Select" formControlName="gender"></p-dropdown>
+        <div *ngIf="(userForm.get('gender').invalid && userForm.get('gender').dirty)">
+          <small class="ng-dirty ng-invalid" *ngIf="userForm.get('dob').hasError('required')">
+            Obligatory.
+          </small>
+        </div>
+      </div>
+
+      <div class="field col-8">
+        <label for="email">Email *</label>
+        <input pInputText id="email" formControlName="email" placeholder="email" required />
+        <div *ngIf="(userForm.get('email').invalid && userForm.get('email').dirty)">
+          <small class="ng-dirty ng-invalid" *ngIf="userForm.get('email').hasError('required')">
+            Obligatory.
+          </small>
+          <small class="ng-dirty ng-invalid" *ngIf="userForm.get('email').hasError('email')">
+            Invalid.
+          </small>
+        </div>
+      </div>
+
+      <div class="field col-4">
+        <label for="phone">Phone *</label>
+        <input pInputText id="phone" formControlName="phone" placeholder="phone" required />
+        <div *ngIf="(userForm.get('phone').invalid && userForm.get('phone').dirty)">
+          <small class="ng-dirty ng-invalid" *ngIf="userForm.get('phone').hasError('required')">
+            Obligatory.
+          </small>
+          <small class="ng-dirty ng-invalid" *ngIf="userForm.get('phone').hasError('pattern')">
+            Invalid.
+          </small>
+        </div>
+      </div>
+
+      <div class="field col-12">
+        <label for="role">Role *</label>
+        <p-dropdown id="role" appendTo="body" [options]="roles" placeholder="Select" optionLabel="name" formControlName="role" ></p-dropdown>
+        <div *ngIf="(userForm.get('role').invalid && userForm.get('role').dirty)">
+          <small class="ng-dirty ng-invalid" *ngIf="userForm.get('role').hasError('required')">
+            Obligatory.
+          </small>
+        </div>
+      </div>
+      
+    </form>
+    </ng-template>
+    <ng-template pTemplate="footer">
+        <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+    <button pButton pRipple label="Save" [disabled]="userForm.invalid" icon="pi pi-check" class="p-button-text"
+      (click)="saveUser()"></button>
+    </ng-template>
+  </p-dialog>
+
+
+  <p-dialog [(visible)]="deleteUserDialog" header="Confirm" [modal]="true" [style]="{width:'50%'}">
+    <div class="flex align-items-center justify-content-center">
+      <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+      <span *ngIf="user">Are you sure you want to delete <b>{{user?.firstName + " " + user?.lastName}}</b>?</span>
+    </div>
+    <ng-template pTemplate="footer">
+      <button pButton pRipple icon="pi pi-times" class="p-button-text" label="No"
+        (click)="deleteUserDialog = false"></button>
+      <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Yes" (click)="confirmDelete()"></button>
+    </ng-template>
+  </p-dialog>
+  
+  <!--------delete selection dialog------- -->
+  <p-dialog [(visible)]="deleteUsersDialog" header="Confirm" [modal]="true" [style]="{width:'50%'}">
+    <div class="flex align-items-center justify-content-center">
+      <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+      <span>Are you sure you want to delete the selected users?</span>
+    </div>
+    <ng-template pTemplate="footer">
+      <button pButton pRipple icon="pi pi-times" class="p-button-text" label="No"
+        (click)="deleteUsersDialog = false"></button>
+      <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Yes"
+        (click)="confirmDeleteSelected()"></button>
+    </ng-template>
+  </p-dialog>

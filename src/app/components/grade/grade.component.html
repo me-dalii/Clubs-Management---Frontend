@@ -1,0 +1,137 @@
+<p-toast></p-toast>
+<div class="grid">
+  <div class="col-12">
+    <div class="card">
+      <p-toolbar styleClass="mb-1">
+        <ng-template pTemplate="left">
+          <div class="my-2">
+            <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success mr-2"
+              (click)="openNew()"></button>
+            <button pButton pRipple label="Delete" icon="pi pi-trash" class="p-button-danger"
+              (click)="deleteSelectedGrades()" [disabled]="!selectedGrade|| !selectedGrade?.length"></button>
+          </div>
+        </ng-template>
+      </p-toolbar>
+      <p-table #dt [value]="grades" responsiveLayout="scroll"
+        [globalFilterFields]="['title']" [rows]="10" [paginator]="true" [rowsPerPageOptions]="[10,20,30]"
+        [showCurrentPageReport]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+        [(selection)]="selectedGrades" selectionMode="multiple" [rowHover]="true" dataKey="id">
+        <ng-template pTemplate="caption">
+          <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
+            <h5 class="m-0">Manage Grades</h5>
+            <span class="block mt-2 md:mt-0 p-input-icon-left">
+              <i class="pi pi-search"></i>
+              <input pInputText Item="text" (input)="dt.filterGlobal($event.target.value, 'contains')"
+                placeholder="Search..."/>
+            </span>
+          </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+          <tr>
+            <th style="width: 3rem">
+              <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+            </th>
+            <th pSortableColumn="title"><div class="flex justify-content-center">Title<p-sortIcon field="title"></p-sortIcon></div></th>
+            <th pSortableColumn="department.name"><div class="flex justify-content-center">Department<p-sortIcon field="department.name"></p-sortIcon></div></th>
+            <th></th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-grade>
+          <tr>
+            <tr>
+              <td>
+                  <p-tableCheckbox [value]="grade"></p-tableCheckbox>
+              </td>
+              <td style="width:40%; min-width:10rem;">
+                  <span class="p-column-title">title</span>
+                  <div class="flex justify-content-center text-center">{{grade?.title}}</div>
+              </td>
+              <td style="width:40%; min-width:10rem;">
+                <span class="p-column-title">department</span>
+                <div class="flex justify-content-center text-center">{{grade?.department?.name}}</div>
+            </td>
+              <td style="width:20%; min-width:10rem;">
+                  <div class="flex justify-content-center text-center">
+                      <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-info mr-2"
+                      (click)="editGrade(grade)"></button>
+                        <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-danger"
+                      (click)="deleteGrade(grade)"></button>
+                  </div>
+                </td>
+          </tr>
+        </ng-template>
+        <!-- empty table message-->
+        <ng-template pTemplate="emptymessage">
+          <tr>
+            <td colspan="6" class="text-center">No Grades found.</td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+</div>
+
+  <p-dialog header="Grade Details" [(visible)]="gradeDialog" [modal]="true"
+    [style]="{width: '70%'}" class="p-fluid">
+    <div class="text-500 mb-5">Please complete all required fields marked with an asterisk (*).</div>
+    <ng-template pTemplate="content">
+    <form [formGroup]="gradeForm" class="grid">
+      <!-- ---hidden--- -->
+      <div class="field">
+        <input Item="text" hidden pInputText id="code" formControlName="id" />
+      </div>
+
+      <div class="field col-12">
+        <label for="title">Title *</label>
+        <input Item="text" pInputText id="title" formControlName="title" placeholder="Role Name" required />
+        <div *ngIf="(gradeForm.get('title').invalid && gradeForm.get('title').dirty)">
+          <small class="ng-dirty ng-invalid" *ngIf="gradeForm.get('title').hasError('required')">
+            Title is required.
+          </small>
+          <small class="ng-dirty ng-invalid" *ngIf="gradeForm.get('title').hasError('pattern')">
+            Not Valid.
+          </small>
+        </div>
+      </div>
+      <div class="field col-12">
+        <label for="department">Department *</label>
+        <p-dropdown id="department" optionLabel="name" appendTo="body" [options]="departments" placeholder="Select" formControlName="department"></p-dropdown>
+        <!-- <div *ngIf="(gradeForm.get('description').invalid && gradeForm.get('description').dirty)">
+          <small class="ng-dirty ng-invalid" *ngIf="gradeForm.get('description').hasError('required')">Description is required.</small>
+        </div> -->
+      </div>
+    </form>
+    </ng-template>
+    <ng-template pTemplate="footer">
+        <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+    <button pButton pRipple label="Save" [disabled]="gradeForm.invalid" icon="pi pi-check" class="p-button-text"
+      (click)="saveGrade()"></button>
+    </ng-template>
+  </p-dialog>
+
+
+  <p-dialog [(visible)]="deleteGradeDialog" header="Confirm" [modal]="true" [style]="{width:'50%'}">
+    <div class="flex align-items-center justify-content-center">
+      <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+      <span *ngIf="grade">Are you sure you want to delete <b>{{grade?.title}}</b>?</span>
+    </div>
+    <ng-template pTemplate="footer">
+      <button pButton pRipple icon="pi pi-times" class="p-button-text" label="No"
+        (click)="deleteGradeDialog = false"></button>
+      <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Yes" (click)="confirmDelete()"></button>
+    </ng-template>
+  </p-dialog>
+  
+  <!--------delete selection dialog------- -->
+  <p-dialog [(visible)]="deleteGradesDialog" header="Confirm" [modal]="true" [style]="{width:'50%'}">
+    <div class="flex align-items-center justify-content-center">
+      <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+      <span>Are you sure you want to delete the selected roles?</span>
+    </div>
+    <ng-template pTemplate="footer">
+      <button pButton pRipple icon="pi pi-times" class="p-button-text" label="No"
+        (click)="deleteGradesDialog = false"></button>
+      <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Yes"
+        (click)="confirmDeleteSelected()"></button>
+    </ng-template>
+  </p-dialog>

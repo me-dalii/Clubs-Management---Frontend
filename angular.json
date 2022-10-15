@@ -107,5 +107,7 @@
       }
     }
   },
-  "defaultProject": "clubs_management"
+  "cli": {
+    "analytics": "627261f8-a582-4cdd-870e-1bea0dad0ad8"
+  }
 }

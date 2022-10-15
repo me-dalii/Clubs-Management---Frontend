@@ -1,0 +1,239 @@
+<p-toast></p-toast>
+<div class="grid">
+    <div class="col-12">
+        <div class="card">
+            <div class="flex align-items-start flex-column lg:justify-content-between lg:flex-row">
+                <div>
+                    <div class="font-medium text-3xl text-900">{{club?.name}}</div>
+                    <div class="flex align-items-center text-700 flex-wrap">
+                        <div class="mr-5 flex align-items-center mt-3">
+                            <i class="pi pi-globe mr-2"></i>
+                            <span>{{club?.events?.length}} Event</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-9" >
+        <div class="card" >
+            <div class="flex align-items-center justify-content-between mb-0">
+                <div class="font-medium text-3xl text-900 mb-3">About</div>
+                <button pButton type="button" icon="pi pi-pencil" class="p-button-text" (click)="editDetailsButton()" ></button>
+            </div>
+            <div class="surface-section">
+                <div class="text-500 mb-5">Données personnelles de Stagiaires.</div>
+                <ul class="list-none p-0 m-0">
+                    <li class="flex align-items-center py-3 px-2 border-top-1 surface-border flex-wrap">
+                        <div class="text-500 w-6 md:w-3 font-medium">Name</div>
+                        <div class="text-900 w-full md:w-9 md:flex-order-0 flex-order-1">
+                            <div *ngIf="dataLoaded">{{club?.name }}</div>
+                            <p-skeleton *ngIf="!dataLoaded" width="10rem" height="1.2rem" ></p-skeleton>
+                        </div>
+                    </li>
+                    <li class="flex align-items-center py-3 px-2 border-top-1 surface-border flex-wrap">
+                        <div class="text-500 w-6 md:w-3 font-medium">Description</div>
+                        <div class="text-900 w-full md:w-9 md:flex-order-0 flex-order-1">
+                            <div *ngIf="dataLoaded">{{club?.description}}</div>
+                            <p-skeleton *ngIf="!dataLoaded" width="5rem" height="1.2rem" ></p-skeleton>
+                        </div>
+                    </li>
+                    <li class="flex align-items-center py-3 px-2 border-top-1 surface-border flex-wrap">
+                        <div class="text-500 w-6 md:w-3 font-medium">Status</div>
+                        <div class="text-900 w-full md:w-9 md:flex-order-0 flex-order-1">
+                            <div *ngIf="dataLoaded">{{club?.status}}</div>
+                            <p-skeleton *ngIf="!dataLoaded" width="5rem" height="1.2rem" ></p-skeleton>
+                        </div>
+                    </li>
+                    <li class="flex align-items-center py-3 px-2 border-top-1 surface-border flex-wrap">
+                        <div class="text-500 w-6 md:w-3 font-medium">E-mail</div>
+                        <div class="text-900 w-full md:w-7 md:flex-order-0 flex-order-1">
+                            <div *ngIf="dataLoaded">{{club?.email}}</div>
+                            <p-skeleton *ngIf="!dataLoaded" width="12rem" height="1.2rem" ></p-skeleton>
+                        </div>
+                        <div class="w-6 md:w-2 flex justify-content-end">
+                            <a href="mailto:{{club?.email}}" pButton pRipple icon="pi pi-send" class="p-button-rounded p-button-secondary p-button-outlined mr-2 mb-2"></a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            </div>
+
+
+
+    </div>
+
+    <div class="col-3">
+        <div class="card" >
+            <div class="justify-content-between text-center">
+                <div class="text-center">
+                    <span class="block text-500 font-medium mb-3">Logo</span>
+                    <p-image *ngIf="club?.logo" [src]="getSrcFromCustomFile(club)" alt="" width="100%" height="200%" [preview]="true"></p-image>
+                    <img *ngIf="!club?.logo" src="./assets/images/Profile_placeholder.png" alt="" class="circular_image"/>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- <div class="col-12">
+        <div class="card">
+                <div class="flex align-items-center justify-content-between mb-0">
+                    <div class="font-medium text-3xl text-900 mb-3">Stages</div>
+                    <button pButton type="button" icon="pi pi-plus" class="p-button-text" (click)="addInternshipButton()" ></button>
+                </div>
+                <div class="surface-section">
+
+                  <div class="text-500 mb-5">Liste des stages demandé et appliqué par {{currentIntern?.firstName}}.</div>
+
+
+                  <p-table [value]="this.currentIntern?.internships" responsiveLayout="scroll" >
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th >Date Début</th>
+                            <th >Date Fin</th>
+                            <th >Université</th>
+                            <th >Specialité</th>
+                            <th >Demande</th>
+                            <th style="width: 3rem"></th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-internship>
+                        <tr class="text-900 font-medium">
+                            <td >{{internship?.start_date | date: 'dd/MM/yyyy'}}</td>
+                            <td >{{internship?.end_date | date: 'dd/MM/yyyy'}}</td>
+                            <td >{{internship?.university?.title}}</td>
+                            <td >{{internship?.speciality}}</td>
+
+                            <td *ngIf="internship?.request_validation == null"><p-tag icon="pi pi-search" severity="warning" value="en attente" styleClass="m-2" [rounded]="true"></p-tag></td>
+                            <td *ngIf="internship?.request_validation == true" ><p-tag icon="pi pi-check" severity="success" value="validé" styleClass="m-2" [rounded]="true"></p-tag></td>
+                            <td *ngIf="internship?.request_validation == false"><p-tag icon="pi pi-times" severity="danger" value="rejeté" styleClass="m-2" [rounded]="true"></p-tag></td>
+
+                            <td style="width: 20%;" class="text-center">
+                                <button pButton pRipple icon="pi pi-eye" class="p-button-text" (click)="loadInternship(internship?.id)"></button>
+                                <button pButton type="button" icon="pi pi-pencil" class="p-button-text" (click)="editInternshipButton(internship)" ></button>
+                                <button pButton pRipple icon="pi pi-times-circle" class="p-button-text" (click)="deleteInternship()"></button>
+                            </td>
+                        </tr>
+
+                        <p-dialog [(visible)]="deleteInternshipDialog" (onHide)="cancelDelete()"  header="Confirmation" [modal]="true" [style]="{width:'50%'}">
+                            <div class="flex align-items-center justify-content-center">
+                              <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+                              <span >Voulez-vous supprimer cet stage? </span>
+                            </div>
+                            <ng-template pTemplate="footer">
+                              <button pButton pRipple icon="pi pi-times" class="p-button-text" label="Non"
+                                (click)="cancelDelete()"></button>
+                              <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Oui" (click)="confirmDelete(internship?.id)"></button>
+                            </ng-template>
+                          </p-dialog>
+
+                    </ng-template>
+                </p-table>
+                    <p-messages *ngIf="currentIntern?.internships?.length == 0" [closable]="false" [value]="[{ severity: 'info', summary: 'Info', detail: 'aucun stage trouvé' }]"></p-messages>
+              </div>
+
+        </div>
+    </div>
+    <p-dialog header="Enregistrer" (onHide)="onHideInternshipDialog()" [(visible)]="internshipDialog" modal="modal" showEffect="fade" [style]="{width: '80%'}" [breakpoints]="{'960px': '75vw'}">
+        <ng-template pTemplate="content">
+        <form [formGroup]="internshipForm">
+            <div class="field">
+                <input type="text" hidden pInputText id="code" formControlName="id" />
+            </div>
+            <div class="p-fluid p-formgrid grid">
+                <div class="field col-12 md:col-4">
+                    <label for="university">Université</label>
+                    <p-dropdown appendTo="body" [options]="universities" placeholder="Choisir Université" optionLabel="title" formControlName="university">
+                </p-dropdown>
+                </div>
+                <div class="field col-12 md:col-4">
+                    <label for="speciality">Specialité</label>
+                    <input pInputText id="speciality" type="text" placeholder="Specialité" formControlName="speciality" />
+                    <div *ngIf="(internshipForm.get('speciality').invalid && internshipForm.get('speciality').dirty)">
+                    <small class="ng-dirty ng-invalid" *ngIf="internshipForm.get('speciality').hasError('required')">specialité est
+                        obligatoire.</small>
+                    </div>
+                </div>
+                <div class="field col-12 md:col-4">
+                  <label for="speciality">Mode</label>
+                  <p-dropdown id="mode" appendTo="body" [options]="intern_modes" placeholder="Sélèctionner Mode" formControlName="mode"></p-dropdown>
+                </div>
+                <div  class="field col-12 md:col-6">
+                    <label for="start_date">Date début</label>
+                    <p-calendar  id="start_date" appendTo="body" [showIcon]="true" dateFormat="dd/mm/yy" placeholder="jj/mm/aaaa"
+                    formControlName="start_date"></p-calendar>
+                    <div *ngIf="(internshipForm.get('start_date').invalid && internshipForm.get('start_date').dirty)">
+                    <small class="ng-dirty ng-invalid" *ngIf="internshipForm.get('start_date').hasError('required')">Date début est
+                        obligatoire.</small>
+                    </div>
+                </div>
+                <div class="field col-12 md:col-6">
+                    <label for="end_date">Date Fin</label>
+                    <p-calendar id="end_date" appendTo="body" [showIcon]="true" 
+                    dateFormat="dd/mm/yy" placeholder="jj/mm/aaaa"
+                    formControlName="end_date" class="overflow-visible"></p-calendar>
+                    <div *ngIf="(internshipForm.get('end_date').invalid && internshipForm.get('end_date').dirty)">
+                    <small class="ng-dirty ng-invalid" *ngIf="internshipForm.get('end_date').hasError('required')">Date Fin est
+                        obligatoire.</small>
+                    </div>
+                </div>
+                <div class="field col-12 md:col-12">
+                    <label for="agent">Encadrent</label>
+                <p-accordion>
+                    <p-accordionTab header="Selectionner un Encadrent"  class="line-height-3 m-0">
+                    <p-table #dt1 [value]="agents" [scrollable]="true" scrollHeight="270px" selectionMode="single" [(selection)]="selectedAgent">
+                        <ng-template  responsiveLayout="scroll" pTemplate="header">
+                            <tr>
+                                <th pSortableColumn="lastName">Nom<p-sortIcon field="lastName"></p-sortIcon></th>
+                                <th pSortableColumn="firstName">Prénom<p-sortIcon field="firstName"></p-sortIcon></th>
+                                <th pSortableColumn="registrationNumber">Matricule<p-sortIcon field="registrationNumber"></p-sortIcon></th>
+                            </tr>
+                            <tr>
+                            <th>
+                                <input pInputText type="text" (input)="dt1.filter($event.target.value, 'lastName', 'contains')" [value]="dt1.filters['lastName']?.value" placeholder="rechercher par nom" class="p-column-filter">
+                            </th>
+                            <th>
+                                <input pInputText type="text" (input)="dt1.filter($event.target.value, 'firstName', 'contains')" [value]="dt1.filters['firstName']?.value" placeholder="rechercher par prénom" class="p-column-filter">
+                            </th>
+                            <th>
+                                <input pInputText type="text" (input)="dt1.filter($event.target.value, 'registrationNumber', 'contains')" [value]="dt1.filters['registrationNumber']?.value" placeholder="rechercher par matricule" class="p-column-filter">
+                            </th>
+                        </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-agent>
+                            <tr [pSelectableRow]="agent" (click)="agentSelected()">
+                                <td><i class="pi pi-user mr-4 " style="font-size: 1rem" ></i><span class="p-column-title">lastName</span>{{agent.lastName }}</td>
+                                <td><span class="p-column-title">firstName</span>{{agent.firstName}}</td>
+                                <td><span class="p-column-title">registrationNumber</span>{{agent.registrationNumber}}</td>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="emptymessage">
+                        <tr>
+                            <td colspan="4">Aucun agent a été trouver.</td>
+                        </tr>
+                    </ng-template>
+                    </p-table>
+                    </p-accordionTab>
+                </p-accordion>
+                </div>
+                <div [hidden]="editInternship" class="field col-12 md:col-12">
+                    <label for="request">Demande</label>
+                    <p-fileUpload accept="application/pdf" id="request" (onSelect)="onSelectRequest($event)" [showCancelButton]=false (onRemove)="onRemoveRequest()" maxFileSize="10000000" invalidFileSizeMessageDetail= "la taille de fichier maximale est de 10 Mo."
+                    [showUploadButton]=false chooseLabel="Choisir" cancelLabel="Annuler">
+                    </p-fileUpload>
+                </div>
+                </div>
+          </form>
+        </ng-template>
+        <ng-template pTemplate="footer">
+            <button pButton icon="pi pi-times" (click)="onHideInternshipDialog()" label="Annuler" class="p-button-outlined"></button>
+            <button pButton icon="pi pi-check" (click)="addInternship()" [disabled]="!internshipForm.valid" label="Enregistrer" class="p-button-outlined"></button>
+        </ng-template>
+    </p-dialog> -->
+</div>
+
+
+
+
+
+
