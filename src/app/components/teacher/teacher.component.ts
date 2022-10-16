@@ -66,6 +66,9 @@ export class TeacherComponent implements OnInit {
   }
 
   saveTeacher(){
+
+    
+    
     this.teacher = {
       'id': this.teacherForm.get('id').value,
       'cin': this.teacherForm.get('cin').value,
