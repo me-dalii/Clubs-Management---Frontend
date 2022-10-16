@@ -149,7 +149,7 @@
 
 <span>Are you sure that you want to delete the selected event types ?</span>
 <ng-template pTemplate="footer">
-    <p-button icon="pi pi-times" (click)="closeEventTypeDialog()" label="Abort" styleClass="p-button-text"></p-button>
+    <p-button icon="pi pi-times" (click)="this.deleteEventTypesDialog = false " label="Abort" styleClass="p-button-text"></p-button>
     <p-button icon="pi pi-check" (click)="confirmDeleteEventTypeSelected()" label="Confirm" styleClass="p-button-text"></p-button>
 
 </ng-template>

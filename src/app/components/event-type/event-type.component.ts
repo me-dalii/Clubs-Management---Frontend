@@ -104,6 +104,8 @@ this.getEventTypes();
   closeEventTypeDialog(){
     this.deleteEventTypeDialog = false ;
   }
+
+  
   saveEventType(){
     this.eventType = {
       "id" : this.eventTypeForm.get("id").value,
