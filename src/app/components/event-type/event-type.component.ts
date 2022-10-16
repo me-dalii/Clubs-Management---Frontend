@@ -49,6 +49,15 @@ export class EventTypeComponent implements OnInit {
 
   editEventType(eventType){
 
+    this.eventTypeForm.reset();
+    this.eventType = eventType;
+
+    this.eventTypeForm.get('id').setValue(eventType.id);
+    this.eventTypeForm.get('title').setValue(eventType.title);
+    this.eventTypeForm.get('description').setValue(eventType.description);
+    
+    this.eventTypeDialog=true;
+
   }
 
   
