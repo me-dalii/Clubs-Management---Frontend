@@ -20,7 +20,7 @@
         [globalFilterFields]="['title']" [rows]="10" [paginator]="true" [rowsPerPageOptions]="[10,20,30]"
         [showCurrentPageReport]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
         [(selection)]="selectedEventTypes" selectionMode="multiple" [rowHover]="true" dataKey="id">
-        <ng-template pTemplate="capti-on">
+        <ng-template pTemplate="caption">
           <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
             <h5 class="m-0">Manage Event Types</h5>
             <span class="block mt-2 md:mt-0 p-input-icon-left">
@@ -55,7 +55,7 @@
                   <p-tableCheckbox [value]="eventType"></p-tableCheckbox>
               </td>
               <td style="width:20%; min-width:10rem;">
-                  <span class="p-column-title">cin</span>
+                  <span class="p-column-title">title</span>
                   <div class="flex justify-content-center text-center">{{eventType?.title}}</div>
               </td>
             
