@@ -1,1 +1,156 @@
-<p>event-type works!</p>
+<p-toast></p-toast>
+<div class="grid">
+  <div class="col-12">
+
+
+    <div class="card">
+      <p-toolbar styleClass="mb-1">
+        <ng-template pTemplate="left">
+          <div class="my-2">
+            <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success mr-2"
+              (click)="openNew()"></button>
+            <button pButton pRipple label="Delete" icon="pi pi-trash" class="p-button-danger" 
+              (click)="deleteSelectedEventTypes()" [disabled]="!selectedEventTypes|| !selectedEventTypes?.length"></button>
+          </div>
+        </ng-template>
+      </p-toolbar>
+
+
+      <p-table #dt [value]="eventTypes" responsiveLayout="scroll"
+        [globalFilterFields]="['title']" [rows]="10" [paginator]="true" [rowsPerPageOptions]="[10,20,30]"
+        [showCurrentPageReport]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+        [(selection)]="selectedEventTypes" selectionMode="multiple" [rowHover]="true" dataKey="id">
+        <ng-template pTemplate="capti-on">
+          <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
+            <h5 class="m-0">Manage Event Types</h5>
+            <span class="block mt-2 md:mt-0 p-input-icon-left">
+              <i class="pi pi-search"></i>
+              <input pInputText Item="text" (input)="dt.filterGlobal($event.target.value, 'contains')"
+                placeholder="Search..."/>
+            </span>
+          </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+          <tr>
+            <th style="width: 3rem">
+              <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+            </th>
+            
+            <th pSortableColumn="title"><div class="flex justify-content-center">title<p-sortIcon field="title"></p-sortIcon></div>
+            </th>
+
+
+            <th>
+
+            </th>
+            
+           
+            
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-eventType>
+          <tr>
+            <tr>
+              <td>
+                  <p-tableCheckbox [value]="eventType"></p-tableCheckbox>
+              </td>
+              <td style="width:20%; min-width:10rem;">
+                  <span class="p-column-title">cin</span>
+                  <div class="flex justify-content-center text-center">{{eventType?.title}}</div>
+              </td>
+            
+              
+            
+
+              <td style="width:30%; min-width:10rem;">
+                  <div class="flex justify-content-center text-center">
+                      <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-info mr-2"
+                      (click)="editEventType(eventType)"></button>
+                        <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-danger"
+                      (click)="deleteEventType(eventType)"></button>
+                  </div>
+                </td>
+          </tr>
+        </ng-template>
+        <!-- empty table message-->
+        <ng-template pTemplate="emptymessage">
+          <tr>
+            <td colspan="6" class="text-center">No Event Type found.</td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+</div>
+
+<p-dialog header="Event Type Details" [(visible)]="eventTypeDialog" [modal]="true"
+[style]="{width: '70%'}" class="p-fluid">
+<div class="text-500 mb-5">Please complete all required fields marked with an asterisk (*).</div>
+<ng-template pTemplate="content">
+
+  
+<form [formGroup]="eventTypeForm" class="grid">
+  <!-- ---hidden--- -->
+  <div class="field">
+    <input Item="text" hidden pInputText id="code" formControlName="id" />
+  </div>
+
+  <div class="field col-12">
+    <label for="title">Title *</label>
+    <input Item="text" pInputText id="title" formControlName="title" placeholder="Title" required />
+    </div>
+    <div class="field col-12">
+   <label >Description *</label>
+    <textarea rows="5" cols="30" pInputText id="description" placeholder="Description" formControlName="description" pInputTextarea autoResize="autoResize"></textarea>
+    </div>
+
+    <!-- <div *ngIf="(teacherForm.get('cin').invalid && teacherForm.get('cin').dirty)">
+      <small class="ng-dirty ng-invalid" *ngIf="teacherForm.get('cin').hasError('required')">
+        Obligatory.
+      </small>
+      <small class="ng-dirty ng-invalid" *ngIf="teacherForm.get('cin').hasError('pattern')">
+        Invalid.
+      </small>
+    </div> -->
+  
+
+  
+
+  
+
+  
+  
+  
+</form>
+</ng-template>
+<ng-template pTemplate="footer">
+    <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+<button pButton pRipple label="Save" [disabled]="eventTypeForm.invalid" icon="pi pi-check" class="p-button-text"
+  (click)="saveEventType()"></button>
+</ng-template>
+</p-dialog>
+
+
+<p-dialog header="Confirm Delete" [(visible)]="deleteEventTypeDialog" [modal]="true"
+[style]="{width: '40%'}" class="p-fluid">
+<i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+
+<span *ngIf="eventType">Are you sure that you want to delete <b>{{eventType?.title }}</b> ?</span>
+<ng-template pTemplate="footer">
+    <p-button icon="pi pi-times" (click)="closeEventTypeDialog()" label="Abort" styleClass="p-button-text"></p-button>
+    <p-button icon="pi pi-check" (click)="confirmDeleteEventType()" label="Confirm" styleClass="p-button-text"></p-button>
+
+</ng-template>
+</p-dialog>
+
+<p-dialog header="Confirm Delete" [(visible)]="deleteEventTypesDialog" [modal]="true"
+[style]="{width: '40%'}" class="p-fluid">
+<i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+
+<span>Are you sure that you want to delete the selected event types ?</span>
+<ng-template pTemplate="footer">
+    <p-button icon="pi pi-times" (click)="this.deleteEventTypesDialog = false " label="Abort" styleClass="p-button-text"></p-button>
+    <p-button icon="pi pi-check" (click)="confirmDeleteEventTypeSelected()" label="Confirm" styleClass="p-button-text"></p-button>
+
+</ng-template>
+</p-dialog>
