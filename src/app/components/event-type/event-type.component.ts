@@ -23,6 +23,7 @@ export class EventTypeComponent implements OnInit {
   deleteEventTypesDialog : boolean;
 
 
+
   constructor(private eventTypeService : EventTypeService, private messageService : MessageService) { }
 
   ngOnInit(): void {

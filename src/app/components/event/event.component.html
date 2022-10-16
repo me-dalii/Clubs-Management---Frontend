@@ -60,11 +60,11 @@
               </td>
               <td style="width:20%; min-width:10rem;">
                 <span class="p-column-title">eventDate</span>
-                <div class="flex justify-content-center text-center">{{event?.eventDate}}</div>
+                <div class="flex justify-content-center text-center">{{event?.eventDate | date : "MM/dd/yy"}}</div>
               </td>
               <td style="width:20%; min-width:10rem;">
                     <span class="p-column-title">endDate</span>
-                    <div class="flex justify-content-center text-center">{{event?.endDate}}</div>
+                    <div class="flex justify-content-center text-center">{{ event?.endDate | date : "MM/dd/yy" }}</div>
               </td>
             <td style="width:20%; min-width:10rem;">
                     <span class="p-column-title">place</span>
@@ -76,7 +76,7 @@
             </td>
             <td style="width:20%; min-width:10rem;">
                 <span class="p-column-title">eventType</span>
-                <div class="flex justify-content-center text-center">{{event?.eventType}}</div>
+                <div class="flex justify-content-center text-center">{{event?.eventType.title}}</div>
             </td>
               <td style="width:30%; min-width:10rem;">
                   <div class="flex justify-content-center text-center">
@@ -120,6 +120,11 @@
             Invalid.
           </small>
         </div> -->
+      </div>
+      <div class="field col-12">
+        <label for="type">Type</label>
+    <p-dropdown [options]="eventTypes" formControlName="type" placeholder="Select a type" optionLabel="title" [showClear]="true"></p-dropdown>
+        
       </div>
 
       <div class="field col-12">

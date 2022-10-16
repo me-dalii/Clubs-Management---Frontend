@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { Event } from 'src/app/models/Event';
+import { EventType } from 'src/app/models/EventType';
+import { EventTypeService } from 'src/services/event-type.service';
 import { EventService } from 'src/services/event.service';
 
 @Component({
@@ -20,16 +22,17 @@ export class EventComponent implements OnInit {
 
   deleteEventDialog : boolean;
   deleteEventsDialog: boolean;
-
+  eventTypes : EventType[] ;
 
   eventForm : FormGroup;
   event: Event
 
-  constructor(private eventService : EventService, private messageService : MessageService) { }
+  constructor(private eventService : EventService, private messageService : MessageService, private eventTypeService : EventTypeService) { }
 
   ngOnInit(): void {
 
     this.getEvents();
+    this.getEventTypes();
 
 
     this.eventForm = new FormGroup({
@@ -40,6 +43,7 @@ export class EventComponent implements OnInit {
       endDate: new FormControl(''),
       place: new FormControl(''),
       participantsEstimation: new FormControl(''),
+      type : new FormControl('')
     })
   }
 
@@ -60,6 +64,16 @@ export class EventComponent implements OnInit {
     })
   }
 
+
+  getEventTypes(){
+
+    this.eventTypeService.getEventTypes().subscribe({
+      next: (response: EventType[]) => { this.eventTypes = response,console.log(this.eventTypes);},
+      error: (e) => this.messageService.add({ severity: 'error', summary: 'Erreur', detail: 'Loading Failed', life: 3000 }),
+    })
+
+  }
+
   editEvent(event){
     this.eventForm.reset()
     this.event = {...event};
@@ -70,7 +84,7 @@ export class EventComponent implements OnInit {
     this.eventForm.get('endDate').setValue(new Date(event.endDate))
     this.eventForm.get('place').setValue(event.place)
     this.eventForm.get('participantsEstimation').setValue(event.participantsEstimation)
-
+    this.eventForm.get('type').setValue(event.eventType)
     this.eventDialog = true;
   }
 
@@ -92,6 +106,7 @@ export class EventComponent implements OnInit {
       'endDate': this.eventForm.get('endDate').value,
       'place': this.eventForm.get('place').value,
       'participantsEstimation': this.eventForm.get('participantsEstimation').value,
+      'eventType' : this.eventForm.get('type').value
     }
 
     this.eventService.saveEvent(this.event).subscribe({
