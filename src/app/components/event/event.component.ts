@@ -18,6 +18,9 @@ export class EventComponent implements OnInit {
 
   eventDialog : boolean;
 
+  deleteEventDialog : boolean;
+  deleteEventsDialog: boolean;
+
 
   eventForm : FormGroup;
   event: Event
@@ -38,15 +41,16 @@ export class EventComponent implements OnInit {
       place: new FormControl(''),
       participantsEstimation: new FormControl(''),
     })
-
   }
 
   openNew(){
+    this.event = {};
+    this.eventForm.reset();
     this.eventDialog = true;
   }
 
   deleteSelectedEvents(){
-
+    this.deleteEventsDialog = true;
   }
 
   getEvents() {
@@ -56,16 +60,27 @@ export class EventComponent implements OnInit {
     })
   }
 
-  editEvent(){
+  editEvent(event){
+    this.eventForm.reset()
+    this.event = {...event};
+    this.eventForm.get('id').setValue(event.id)
+    this.eventForm.get('title').setValue(event.title)
+    this.eventForm.get('description').setValue(event.description)
+    this.eventForm.get('eventDate').setValue(new Date(event.eventDate))
+    this.eventForm.get('endDate').setValue(new Date(event.endDate))
+    this.eventForm.get('place').setValue(event.place)
+    this.eventForm.get('participantsEstimation').setValue(event.participantsEstimation)
 
+    this.eventDialog = true;
   }
 
-  deleteEvent(){
-
+  deleteEvent(event){
+    this.event = event;
+    this.deleteEventDialog = true;
   }
 
   hideDialog(){
-
+    this.eventDialog = false;
   }
 
   saveEvent(){
@@ -90,6 +105,32 @@ export class EventComponent implements OnInit {
       },
       complete: () => this.eventDialog = false
     })
+  }
+
+  confirmDelete() {
+    this.eventService.deleteEvent(this.event.id).subscribe({
+      next: (v) => 
+      {
+        this.getEvents();
+        this.messageService.add({ severity: 'success', summary: 'Successful', detail: "Event deleted", life: 3000 });
+      },
+      error: (e) => this.messageService.add({ severity: 'error', summary: 'Erreur', detail: 'Delete Failed', life: 3000 }),
+      complete: () => this.deleteEventDialog = false
+    })
+    this.event = {};
+  }
+
+  confirmDeleteSelected() {
+    for (let s of this.selectedEvents) {
+      this.eventService.deleteEvent(s.id).subscribe({
+        next: (v) => this.getEvents(),
+        error: (e) => this.messageService.add({ severity: 'error', summary: 'Erreur', detail: 'Delete Failed', life: 3000 }),
+      })
+    }
+    this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Deleted Successfully', life: 3000 });
+    this.deleteEventsDialog = false;
+    this.selectedEvents = null;
+
   }
 
 

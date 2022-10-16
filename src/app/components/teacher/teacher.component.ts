@@ -124,7 +124,7 @@ export class TeacherComponent implements OnInit {
       next: (v) => 
       {
         this.getTeachers();
-        this.messageService.add({ severity: 'success', summary: 'Successful', detail: "L'Attachement a été Supprimés", life: 3000 });
+        this.messageService.add({ severity: 'success', summary: 'Successful', detail: "Teacher Deleted", life: 3000 });
       },
       error: (e) => this.messageService.add({ severity: 'error', summary: 'Erreur', detail: 'Delete Failed', life: 3000 }),
       complete: () => this.deleteTeacherDialog = false
