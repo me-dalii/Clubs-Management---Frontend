@@ -10,6 +10,7 @@ import { EventComponent } from './components/event/event.component';
 import { GradeComponent } from './components/grade/grade.component';
 import { LandingAboutComponent } from './components/landing/landing-about/landing-about.component';
 import { LandingClubComponent } from './components/landing/landing-club/landing-club.component';
+import { LandingEventComponent } from './components/landing/landing-event/landing-event.component';
 import { LandingHomeComponent } from './components/landing/landing-home/landing-home.component';
 import { LandingComponent } from './components/landing/landing.component';
 import { ContainerComponent } from './components/leader components/container/container.component';
@@ -31,6 +32,8 @@ import { AppLayoutComponent } from './layout/app.layout.component';
             { path:'', component : LandingHomeComponent},
             { path:'about', component : LandingAboutComponent },
             { path:'clubs', component : LandingClubComponent },
+            { path:'events', component : LandingEventComponent },
+
           ]
         },
         {

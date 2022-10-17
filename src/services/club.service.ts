@@ -33,6 +33,10 @@ export class ClubService {
     return this.http.put<Club>(`${this.host}${clubId}/coordinator/${coordinatorId}`,null);
   }
 
+  public updateClubStatus(clubId : number, status : boolean):Observable<Club>{
+    return this.http.put<Club>(`${this.host}${clubId}/status`,status);
+  }
+
   public saveClub(formData : FormData): Observable<Club>{
     return this.http.post<Club>(`${this.host}`,formData);
   }

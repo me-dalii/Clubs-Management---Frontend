@@ -28,12 +28,12 @@ export class AppMenuComponent implements OnInit {
                             items: [
                                 {
                                     label: "Users",
-                                    icon: 'pi pi-fw pi-circle',
+                                    icon: 'pi pi-fw pi-users',
                                     routerLink: ['/dashboard/users']
                                 },
                                 {
                                     label: "Roles",
-                                    icon: 'pi pi-fw pi-circle',
+                                    icon: 'pi pi-fw pi-id-card',
                                     routerLink: ['/dashboard/roles']
                                 }
                             ]
@@ -45,31 +45,31 @@ export class AppMenuComponent implements OnInit {
                         },
                         {
                             label: 'Teachers',
-                            icon: 'pi pi-fw pi-clone',
+                            icon: 'pi pi-fw pi-briefcase',
                             routerLink: ['/dashboard/teachers']
                         },
                         {
                             label: 'Grades',
-                            icon: 'pi pi-fw pi-clone',
+                            icon: 'pi pi-fw pi-book',
                             routerLink: ['/dashboard/grades']
                         },
                         {
                             label: 'Departments',
-                            icon: 'pi pi-fw pi-clone',
+                            icon: 'pi pi-fw pi-building',
                             routerLink: ['/dashboard/departments']
                         },
                         {
                             label: 'Events',
-                            icon: 'pi pi-fw pi-shield',
+                            icon: 'pi pi-fw pi-calendar',
                             items: [
                                 {
                                     label: "Manage Events",
-                                    icon: 'pi pi-fw pi-circle',
+                                    icon: 'pi pi-fw pi-calendar-plus',
                                     routerLink: ['/dashboard/events']
                                 },
                                 {
                                     label: "Manage Types",
-                                    icon: 'pi pi-fw pi-circle',
+                                    icon: 'pi pi-fw pi-sitemap',
                                     routerLink: ['/dashboard/events/type']
                                 }
                             ]

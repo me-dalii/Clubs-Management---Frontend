@@ -11,8 +11,8 @@ export interface Club extends AbstractEntity{
 
 
     logo? : CustomFile;
-    FSBrequest? : CustomFile;
-    logUCrequesto? : CustomFile;
+    fsbrequest? : CustomFile;
+    ucrequest? : CustomFile;
 
     leader? : User;
     coordinator? : Teacher;

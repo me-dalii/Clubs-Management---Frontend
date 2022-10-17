@@ -72,6 +72,7 @@ import { MyeventsComponent } from './components/leader components/myevents/myeve
 import { ContainerComponent } from './components/leader components/container/container.component';
 import { TagModule } from 'primeng/tag';
 import {ImageModule} from 'primeng/image';
+import {CardModule} from 'primeng/card';
 
 @NgModule({
   declarations: [
@@ -149,7 +150,8 @@ import {ImageModule} from 'primeng/image';
     TableModule,
     PdfViewerModule,
     TagModule,
-    ImageModule
+    ImageModule,
+    CardModule
   ],
   providers: [],
   bootstrap: [AppComponent]
