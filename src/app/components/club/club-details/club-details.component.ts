@@ -25,8 +25,6 @@ export class ClubDetailsComponent implements OnInit {
 
   ngOnInit(): void {
 
-
-
     this.pathId = parseInt(this.route.snapshot.paramMap.get('id'));
 
     this.getClub();

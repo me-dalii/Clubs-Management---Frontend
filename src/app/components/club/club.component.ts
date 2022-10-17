@@ -81,8 +81,6 @@ export class ClubComponent implements OnInit {
   }
 
   getSrcFromCustomFile(club : Club) {
-    if(club.logo != null)
-      return null;
     let uint8Array = new Uint8Array(atob(club.logo.data).split("").map(char => char.charCodeAt(0)));
     let dwn = new Blob([uint8Array])
     return this.sanitizer.bypassSecurityTrustResourceUrl(URL.createObjectURL(dwn));

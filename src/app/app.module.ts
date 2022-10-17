@@ -65,6 +65,13 @@ import { DepartmentComponent } from './components/department/department.componen
 import { LandingClubComponent } from './components/landing/landing-club/landing-club.component';
 import { LandingHomeComponent } from './components/landing/landing-home/landing-home.component';
 import { ClubDetailsComponent } from './components/club/club-details/club-details.component';
+import { LandingAboutComponent } from './components/landing/landing-about/landing-about.component';
+import { LandingEventComponent } from './components/landing/landing-event/landing-event.component';
+import { MyclubComponent } from './components/leader components/myclub/myclub.component';
+import { MyeventsComponent } from './components/leader components/myevents/myevents.component';
+import { ContainerComponent } from './components/leader components/container/container.component';
+import { TagModule } from 'primeng/tag';
+import {ImageModule} from 'primeng/image';
 
 @NgModule({
   declarations: [
@@ -82,7 +89,12 @@ import { ClubDetailsComponent } from './components/club/club-details/club-detail
     DepartmentComponent,
     LandingClubComponent,
     LandingHomeComponent,
-    ClubDetailsComponent
+    ClubDetailsComponent,
+    LandingAboutComponent,
+    LandingEventComponent,
+    MyclubComponent,
+    MyeventsComponent,
+    ContainerComponent
   ],
   imports: [
     BrowserModule,
@@ -136,6 +148,8 @@ import { ClubDetailsComponent } from './components/club/club-details/club-detail
     SplitButtonModule,
     TableModule,
     PdfViewerModule,
+    TagModule,
+    ImageModule
   ],
   providers: [],
   bootstrap: [AppComponent]

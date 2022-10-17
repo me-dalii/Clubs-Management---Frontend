@@ -21,9 +21,17 @@ export class ClubService {
     return this.http.get<Club>(`${this.host}${id}`);
   }
 
-  // public saveClub(club : Club):Observable<Club>{
-  //   return this.http.post<Club>(this.host, club);
-  // }
+  public getClubByLeaderUsername(username : string): Observable<Club>{
+    return this.http.get<Club>(`${this.host}leader/${username}`);
+  }
+
+  public saveClubDetails(club : Club):Observable<Club>{
+     return this.http.post<Club>(this.host + "details", club);
+   }
+
+  public updateClubCoordinator(clubId : number, coordinatorId : number):Observable<Club>{
+    return this.http.put<Club>(`${this.host}${clubId}/coordinator/${coordinatorId}`,null);
+  }
 
   public saveClub(formData : FormData): Observable<Club>{
     return this.http.post<Club>(`${this.host}`,formData);

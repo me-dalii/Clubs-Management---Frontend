@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MessageService } from 'primeng/api';
-import { Role } from 'src/app/models/Role';
 import { User } from 'src/app/models/User';
 import { Gender } from 'src/enums/Gender';
+import { Role } from 'src/enums/Role';
 import { RoleService } from 'src/services/role.service';
 import { UserService } from 'src/services/user.service';
 
@@ -19,7 +19,6 @@ export class UserComponent implements OnInit {
   selectedUsers : User[];
 
   
-  roles : Role[];
   
   user: User;
 
@@ -31,6 +30,9 @@ export class UserComponent implements OnInit {
   gender = Gender;
   genders = [];
 
+  role = Role;
+  roles = [];
+
   userForm: FormGroup;
 
   constructor(private messageService: MessageService, private userService : UserService, private roleService : RoleService) { }
@@ -38,10 +40,10 @@ export class UserComponent implements OnInit {
   ngOnInit(): void {
 
     this.getUsers();
-    this.getRoles();
-
     
     this.genders = Object.keys(this.gender);
+    this.roles = Object.keys(this.role);
+
 
     this.userForm = new FormGroup({
       id: new FormControl(''),
@@ -64,12 +66,6 @@ export class UserComponent implements OnInit {
     })
   }
 
-  getRoles(){
-    this.roleService.getRoles().subscribe({
-      next: (response: Role[]) => this.roles = response,
-      error: (e) => this.messageService.add({ severity: 'error', summary: 'Erreur', detail: 'Loadin failed', life: 3000 }),
-    })
-  }
 
   openNew(){
     this.user = {};
@@ -92,8 +88,6 @@ export class UserComponent implements OnInit {
       'email': this.userForm.get('email').value,
       'phone': this.userForm.get('phone').value,
       'dob': this.userForm.get('dob').value,
-      'gender' : this.userForm.get('gender').value,
-
     }
 
     this.userService.saveUser(this.user).subscribe({

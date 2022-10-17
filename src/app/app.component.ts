@@ -13,7 +13,7 @@ export class AppComponent {
 
     ngOnInit() {
         this.primengConfig.ripple = true;
-        document.documentElement.style.fontSize = '14px';
+        document.documentElement.style.fontSize = '16px';
     }
 }
 

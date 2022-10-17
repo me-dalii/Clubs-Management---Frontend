@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { Account } from 'src/app/models/Account';
 import { Club } from 'src/app/models/Club';
@@ -9,6 +10,7 @@ import { User } from 'src/app/models/User';
 import { Gender } from 'src/enums/Gender';
 import { Role } from 'src/enums/Role';
 import { AccountService } from 'src/services/account.service';
+import { AuthenticationService } from 'src/services/authentication.service';
 import { ClubService } from 'src/services/club.service';
 import { GradeService } from 'src/services/grade.service';
 import { TeacherService } from 'src/services/teacher.service';
@@ -41,7 +43,9 @@ export class RegistrationComponent implements OnInit {
 
   constructor(private messageService : MessageService, private userService : UserService,
     private teacherService : TeacherService, private gradeService : GradeService,
-    private accountService : AccountService, private clubService : ClubService,) { }
+    private accountService : AccountService, private clubService : ClubService,
+    private authenticationService: AuthenticationService,
+    private router: Router) { }
 
   ngOnInit(): void {
 
@@ -162,8 +166,6 @@ export class RegistrationComponent implements OnInit {
               coordinator: this.myForm.get('coordinator').value,
               leader: user,
             }
-            console.log("sooooooo");
-            console.log(club);
 
             const formData: FormData = new FormData();
             formData.append('name', this.myForm.get('name').value);
@@ -194,7 +196,24 @@ export class RegistrationComponent implements OnInit {
               error: (e) => {
                 this.showLoading = false;
                 this.messageService.add({ severity: 'error', summary: 'Erreur', detail: 'Club Saving Failed', life: 3000 });
+              },
+              complete: () => {
+                //login
+                this.authenticationService.login(account).subscribe({
+                  next: (response: any) => {
+                    this.authenticationService.saveAccessToken(response.headers.get("access_token"));
+                    this.authenticationService.saveRefreshToken(response.headers.get("refresh_token"));
+                    this.authenticationService.addAccountRoleToLocalCache();
+                    this.router.navigate(['/dashboard']);
+                  },
+                  error: (e) => {
+                    this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Failed Authentication', life: 3000 })
+                  },
+                  complete: () => this.showLoading = false
+                  
+                });
               }
+
             })
           }
         })

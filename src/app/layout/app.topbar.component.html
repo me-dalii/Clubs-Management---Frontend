@@ -21,20 +21,11 @@
 
 
     <div class="layout-topbar-menu" [ngClass]="{'layout-topbar-menu-mobile-active': layoutService.state.profileSidebarVisible}">
-        <button class="p-link layout-topbar-button">
-            <i class="pi pi-bell"></i>
-            <span>Notifications</span>
-        </button>
         
-        <button class="p-link layout-topbar-button">
-            <i class="pi pi-comment"></i>
-            <span>Messages</span>
-        </button>
-
-        <button (click)="onProfile()"  class="p-link layout-topbar-button">
-            <i class="pi pi-user"></i>
-            <span>Profile</span>
-        </button>
+        <p-button #btn (click)="menu.toggle($event)" icon="pi pi-user" styleClass="p-button-lg p-button-rounded p-button-plain p-button-text">
+        </p-button>
+        <p-tieredMenu #menu [model]="profileItems" [popup]="true"></p-tieredMenu>
+        
         <a (click)="onLogout()" class="p-link layout-topbar-button">
             <i class="pi pi-sign-out"></i>
             <span>Log out</span>

@@ -8,9 +8,13 @@ import { DepartmentComponent } from './components/department/department.componen
 import { EventTypeComponent } from './components/event-type/event-type.component';
 import { EventComponent } from './components/event/event.component';
 import { GradeComponent } from './components/grade/grade.component';
+import { LandingAboutComponent } from './components/landing/landing-about/landing-about.component';
 import { LandingClubComponent } from './components/landing/landing-club/landing-club.component';
 import { LandingHomeComponent } from './components/landing/landing-home/landing-home.component';
 import { LandingComponent } from './components/landing/landing.component';
+import { ContainerComponent } from './components/leader components/container/container.component';
+import { MyclubComponent } from './components/leader components/myclub/myclub.component';
+import { MyeventsComponent } from './components/leader components/myevents/myevents.component';
 import { RoleComponent } from './components/role/role.component';
 import { TeacherComponent } from './components/teacher/teacher.component';
 import { UserComponent } from './components/user/user.component';
@@ -24,7 +28,8 @@ import { AppLayoutComponent } from './layout/app.layout.component';
         {
           path: '', component: LandingComponent,
           children:[
-            { path:'', component : LandingHomeComponent },
+            { path:'', component : LandingHomeComponent},
+            { path:'about', component : LandingAboutComponent },
             { path:'clubs', component : LandingClubComponent },
           ]
         },
@@ -44,6 +49,10 @@ import { AppLayoutComponent } from './layout/app.layout.component';
 
             { path:'grades', component : GradeComponent },
             { path:'departments', component : DepartmentComponent },
+
+            { path:'my_club', component : MyclubComponent },
+            { path:'my_events', component : MyeventsComponent },
+            { path:'container', component : ContainerComponent },
 
 
           ]
