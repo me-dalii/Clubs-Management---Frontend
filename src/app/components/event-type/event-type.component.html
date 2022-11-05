@@ -35,17 +35,10 @@
             <th style="width: 3rem">
               <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
             </th>
-            
             <th pSortableColumn="title"><div class="flex justify-content-center">title<p-sortIcon field="title"></p-sortIcon></div>
             </th>
-
-
             <th>
-
             </th>
-            
-           
-            
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-eventType>
@@ -54,14 +47,10 @@
               <td>
                   <p-tableCheckbox [value]="eventType"></p-tableCheckbox>
               </td>
-              <td style="width:20%; min-width:10rem;">
+              <td style="width:60%; min-width:10rem;">
                   <span class="p-column-title">title</span>
                   <div class="flex justify-content-center text-center">{{eventType?.title}}</div>
               </td>
-            
-              
-            
-
               <td style="width:30%; min-width:10rem;">
                   <div class="flex justify-content-center text-center">
                       <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-info mr-2"

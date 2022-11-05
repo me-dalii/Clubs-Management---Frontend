@@ -45,8 +45,94 @@
                 </div>
             </div>
         </div>
-        <router-outlet>
-        </router-outlet>
+
+
+        <div class="grid grid-nogutter lg:px-8 surface-section text-800">
+            <div class="col-12 md:col-6 p-6 text-center md:text-left flex align-items-center ">
+                <section>
+                    <span class="block text-6xl font-bold mb-1">Bring close your community</span>
+                    <div class="text-6xl text-primary font-bold mb-3">Create your Club!</div>
+                    <p class="mt-0 mb-4 text-700 line-height-3">Do not follow where the path may lead. Go instead where there is no path and leave a trail.</p>
+                </section>
+            </div>
+            <div class="col-12 md:col-6 overflow-hidden">
+                <img src="assets/images/work.jpg" alt="Image" class="md:ml-auto block md:h-full" style="clip-path: polygon(8% 0, 100% 0%, 100% 100%, 0 100%)">
+            </div>
+        </div>
+        <div id="features" class="py-4 px-4 lg:px-8 mt-5 mx-0 lg:mx-8">
+            <div class="grid justify-content-center">
+                <div class="col-12 text-center mt-8 mb-4">
+                    <h2 class="text-900 font-normal mb-2">Active Clubs</h2>
+                    <!-- <span class="text-600 text-2xl">Placerat in egestas erat...</span> -->
+                </div>
+        
+                <div *ngFor="let club of clubs" class="col-3">
+                    <p-card header="{{club?.name}}" subheader="{{club?.leader.grade.department.title}}" [style]="{width: '250px'}" styleClass="p-card-shadow">
+                        <ng-template pTemplate="header">
+                            <img *ngIf="club?.logo != null" alt="Card" [src]="getSrcFromCustomFile(club)">
+                            <img *ngIf="club?.logo == null" alt="Card" src="assets/images/4c.png">
+        
+                        </ng-template>
+                        <p>{{club?.description}}</p>
+                    </p-card>
+                    <!-- <div style="height:160px; padding:2px; border-radius:10px; background: linear-gradient(90deg, rgba(145, 226, 237, 0.2), rgba(172, 180, 223, 0.2)), linear-gradient(180deg, rgba(172, 180, 223, 0.2), rgba(246, 158, 188, 0.2));">
+                        <div class="p-3 surface-card h-full" style="border-radius:8px;">
+                            <div class="flex align-items-center justify-content-center bg-indigo-200" style="width:3.5rem;height:3.5rem; border-radius:10px;">
+                                <i class="pi pi-fw pi-map text-2xl text-indigo-700"></i>
+                            </div>
+                            <h5 class="mb-2 text-900">{{club?.name}}</h5>
+                            <span class="text-600">{{club?.description}}</span>
+                        </div>
+                    </div> -->
+                </div>
+        
+                <div class="col-12 mt-8 mb-8 p-2 md:p-8" style="border-radius:20px; background:linear-gradient(0deg, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.6)), radial-gradient(77.36% 256.97% at 77.36% 57.52%, #EFE1AF 0%, #C3DCFA 100%);">
+                    <div class="flex flex-column justify-content-center align-items-center text-center px-3 py-3 md:py-0">
+                        <p class="text-gray-900 sm:line-height-2 md:line-height-4 text-2xl mt-4" style="max-width:800px;">“We make a living by what we get, but we make a life by what we give.”</p>
+                        
+                        <h3 class="text-gray-900 mb-2">Winston Churchill</h3>
+                        <!-- <span class="text-gray-600 text-2xl">Peak Interactive</span> -->
+                        <!-- <img src="assets/demo/images/landing/peak-logo.svg" class="mt-4" alt="Company logo"> -->
+        
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="highlights" class="py-4 px-4 lg:px-8 mx-0 my-6 lg:mx-8">
+            <div class="text-center">
+                <h2 class="text-900 font-normal mb-2">About</h2>
+                <span class="text-600 text-2xl">Amet consectetur adipiscing elit...</span>
+            </div>
+        
+            <div class="grid mt-8 pb-2 md:pb-8">
+                <div class="flex justify-content-center col-12 lg:col-6 bg-purple-100 p-0 flex-order-1 lg:flex-order-0" style="border-radius:8px;">
+                    <img src="assets/images/fsb.jpeg" class="w-11" alt="mockup mobile">
+                </div>
+        
+                <div class="col-12 lg:col-6 my-auto flex flex-column lg:align-items-end text-center lg:text-right">
+                    <div class="flex align-items-center justify-content-center bg-purple-200 align-self-center lg:align-self-end" style="width:4.2rem; height:4.2rem; border-radius: 10px;">
+                        <i class="pi pi-fw pi-building text-5xl text-purple-700"></i>
+                    </div>
+                    <h2 class="line-height-1 text-900 text-4xl font-normal">Faculty of Sciences of Bizerte</h2>
+                    <span class="text-700 text-2xl line-height-3 ml-0 md:ml-2" style="max-width:650px;">The Faculty of Science of Bizerte is a teaching and research institution under the supervision of the Ministry of Higher Education and Scientific Research. It is attached to the University of Carthage. The Faculty of Sciences of Bizerte was founded in 1990 (Law No. 106 of 26 November 1990) and replaced the Ecole Normale Supérieure created in 1956 in Tunis and transferred to Bizerte in October 1980.</span>
+                </div>
+            </div>
+        
+            <div class="grid my-8 pt-2 md:pt-8">
+                <div class="col-12 lg:col-6 my-auto flex flex-column text-center lg:text-left lg:align-items-start">
+                    <div class="flex align-items-center justify-content-center bg-yellow-200 align-self-center lg:align-self-start" style="width:4.2rem; height:4.2rem; border-radius:10px;">
+                        <i class="pi pi-fw pi-star text-5xl text-yellow-700"></i>
+                    </div>
+                    <h2 class="line-height-1 text-900 text-4xl font-normal">4C</h2>
+                    <span class="text-700 text-2xl line-height-3 mr-0 md:mr-2" style="max-width:650px;">The Career and Skills Certification Center (4C) of the University of Tunis is a structure attached to the presidency of the University. The 4C of the University of Carthage plays the role of a link between the university, the student and the company. Its mission is to prepare and support students and graduates and to facilitate their integration into the labor market.</span>
+                </div>
+        
+                <div class="flex justify-content-center flex-order-1 sm:flex-order-2 col-12 lg:col-6 bg-yellow-100 p-0" style="border-radius:8px;">
+                    <img src="assets/images/cccc.png" class="w-11" alt="mockup">
+                </div>
+            </div>
+        </div>
+
         <div class="py-4 px-4 mx-0 mt-8 lg:mx-8">
             <div class="grid justify-content-between">
                 <div class="col-12 md:col-2" style="margin-top:-1.5rem;">
