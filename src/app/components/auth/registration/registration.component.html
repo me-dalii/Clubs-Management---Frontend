@@ -69,7 +69,7 @@
                                 <label for="sector">Select a Coordinator*</label>
                                 <p-table #dt [rowHover]="true" [value]="teachers" selectionMode="single" [(selection)]="selectedTeacher"  [rows]="10" [paginator]="true"
                                  responsiveLayout="scroll" (onRowSelect)="onRowSelect($event)" (onRowUnselect)="onRowUnselect($event)" styleClass="p-datatable-gridlines"
-                                [globalFilterFields]="['firstName','lastName','email']" dataKey="id"
+                                [globalFilterFields]="['firstName','lastName']" dataKey="id"
                                 currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true">
                                 <ng-template pTemplate="caption">
                                     <div class="flex align-items-center justify-content-between">
@@ -84,7 +84,6 @@
                                             <tr>
                                               <th pSortableColumn="firstName"><div class="flex justify-content-center">First Name<p-sortIcon field="firstName"></p-sortIcon></div>
                                               <th pSortableColumn="lastName"><div class="flex justify-content-center">Last Name<p-sortIcon field="lastName"></p-sortIcon></div>
-                                              <th pSortableColumn="email"><div class="flex justify-content-center">Email<p-sortIcon field="email"></p-sortIcon></div>
                                             </tr>
                                         </ng-template>
                                         <ng-template pTemplate="body" let-teacher>
@@ -96,10 +95,6 @@
                                                 <td style="width:30%; min-width:10rem;">
                                                     <span class="p-column-title">lastName</span>
                                                     <div class="flex justify-content-center text-center">{{teacher?.lastName}}</div>
-                                                </td>
-                                                <td style="width:40%; min-width:12rem;">
-                                                    <span class="p-column-title">email</span>
-                                                    <div class="flex justify-content-center text-center">{{teacher?.email}}</div>
                                                 </td>
                                             </tr>
                                         </ng-template>

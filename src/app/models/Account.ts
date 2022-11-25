@@ -5,4 +5,5 @@ export interface Account extends AbstractEntity{
     username? : string;
     password? : string;
     role? : Role;
+    status? : Boolean;
 }

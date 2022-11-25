@@ -73,6 +73,7 @@ import { ContainerComponent } from './components/leader components/container/con
 import { TagModule } from 'primeng/tag';
 import {ImageModule} from 'primeng/image';
 import {CardModule} from 'primeng/card';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -99,6 +100,7 @@ import {CardModule} from 'primeng/card';
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     BrowserAnimationsModule,
     FormsModule,
     SkeletonModule,

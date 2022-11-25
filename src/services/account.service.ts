@@ -28,4 +28,8 @@ export class AccountService {
   public deleteAccount(id : Number):Observable<Account>{
     return this.http.delete<Account>(`${this.host}${id}`);
   }
+
+  public updateAccountStatus(accountId : number, status : boolean):Observable<Account>{
+    return this.http.put<Account>(`${this.host}status/${accountId}`,status);
+  }
 }

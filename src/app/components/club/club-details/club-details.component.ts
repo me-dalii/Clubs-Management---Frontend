@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { Club } from 'src/app/models/Club';
 import { Teacher } from 'src/app/models/Teacher';
+import { AccountService } from 'src/services/account.service';
 import { ClubService } from 'src/services/club.service';
 import { TeacherService } from 'src/services/teacher.service';
 
@@ -33,6 +34,7 @@ export class ClubDetailsComponent implements OnInit {
   statusValue : boolean;
 
   constructor(private route: ActivatedRoute, private clubService: ClubService, 
+    private accountService: AccountService, 
     private messageService: MessageService,private teacherService : TeacherService,
     private sanitizer: DomSanitizer) { }
 
@@ -62,8 +64,6 @@ export class ClubDetailsComponent implements OnInit {
     })
   }
 
-  
-
   editDetailsButton(){
 
   }
@@ -74,8 +74,8 @@ export class ClubDetailsComponent implements OnInit {
   
   saveStatus(){
     console.log(this.statusValue);
-    this.clubService.updateClubStatus(this.club.id,this.statusValue).subscribe({
-      next: (response: Club) => this.club = response,
+    this.accountService.updateAccountStatus(this.club.leader.account.id,this.statusValue).subscribe({
+      next: (response: Club) => this.getClub(),
       error: (e) => this.messageService.add({ severity: 'error', summary: 'Erreur', detail: 'Status Update Failed', life: 3000 }),
       complete: () => {
         this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Status Updated', life: 3000 });
@@ -84,7 +84,6 @@ export class ClubDetailsComponent implements OnInit {
     })
 
   }
-
   
   getSrcFromCustomFile(club) {
     let uint8Array = new Uint8Array(atob(club.logo.data).split("").map(char => char.charCodeAt(0)));
