@@ -5,6 +5,7 @@ import { RegistrationComponent } from './components/auth/registration/registrati
 import { ClubDetailsComponent } from './components/club/club-details/club-details.component';
 import { ClubComponent } from './components/club/club.component';
 import { DepartmentComponent } from './components/department/department.component';
+import { EventRequestComponent } from './components/event-request/event-request.component';
 import { EventTypeComponent } from './components/event-type/event-type.component';
 import { EventComponent } from './components/event/event.component';
 import { GradeComponent } from './components/grade/grade.component';
@@ -49,6 +50,8 @@ import { AppLayoutComponent } from './layout/app.layout.component';
 
             { path:'events', component : EventComponent },
             { path:'events/type', component : EventTypeComponent },
+            { path:'events/requests', component : EventRequestComponent },
+
 
             { path:'grades', component : GradeComponent },
             { path:'departments', component : DepartmentComponent },

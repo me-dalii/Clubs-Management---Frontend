@@ -44,4 +44,8 @@ export class ClubService {
   public deleteClub(id : Number):Observable<Club>{
     return this.http.delete<Club>(`${this.host}${id}`);
   }
+
+  public getApprovedClubs(): Observable<Club[]>{
+    return this.http.get<Club[]>(this.host + "approved");
+  }
 }

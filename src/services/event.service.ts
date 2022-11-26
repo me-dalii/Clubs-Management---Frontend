@@ -28,4 +28,24 @@ export class EventService {
   public deleteEvent(id : Number):Observable<Event>{
     return this.http.delete<Event>(`${this.host}${id}`);
   }
+
+  public getEventsByClubId(id : number): Observable<Event[]>{
+    return this.http.get<Event[]>(`${this.host}club/${id}`);
+  }
+
+  public updateEventStatus(eventId : number, status : boolean):Observable<Event>{
+    return this.http.put<Event>(`${this.host}status/${eventId}`,status);
+  }
+
+  public getRequestedEvents(): Observable<Event[]>{
+    return this.http.get<Event[]>(this.host + "requested");
+  }
+
+  public getApprovedEvents(): Observable<Event[]>{
+    return this.http.get<Event[]>(this.host + "approved");
+  }
+
+  public getRejectedEvents(): Observable<Event[]>{
+    return this.http.get<Event[]>(this.host + "rejected");
+  }
 }

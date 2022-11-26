@@ -2,6 +2,8 @@ import { AbstractEntity } from "./AbstractEntity";
 import { CustomFile } from "./CustomFile";
 import { Teacher } from "./Teacher";
 import { User } from "./User";
+import { Event } from "./Event";
+
 
 export interface Club extends AbstractEntity{
     name? : string;

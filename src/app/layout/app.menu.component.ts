@@ -68,6 +68,11 @@ export class AppMenuComponent implements OnInit {
                                     routerLink: ['/dashboard/events']
                                 },
                                 {
+                                    label: "Requests",
+                                    icon: 'pi pi-fw pi-comment',
+                                    routerLink: ['/dashboard/events/requests']
+                                },
+                                {
                                     label: "Manage Types",
                                     icon: 'pi pi-fw pi-sitemap',
                                     routerLink: ['/dashboard/events/type']

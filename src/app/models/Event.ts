@@ -10,6 +10,8 @@ export interface Event extends AbstractEntity{
     endDate? : Date;
     participantsEstimation? : number;
 
+    status? : Boolean;
+
     eventType? : EventType;
 
     club? : Club;

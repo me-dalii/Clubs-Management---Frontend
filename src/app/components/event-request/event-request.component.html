@@ -1,0 +1,278 @@
+<p-toast></p-toast>
+<div class="card">
+    <h5>Default</h5>
+    <p-tabView>
+        <p-tabPanel header="Requests" leftIcon="pi pi-inbox">
+            
+              <p-table #dt [value]="requestedEvents" responsiveLayout="scroll"
+                [globalFilterFields]="['title']" [rows]="10" [paginator]="true" [rowsPerPageOptions]="[10,20,30]"
+                [showCurrentPageReport]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                 selectionMode="multiple" [rowHover]="true" dataKey="id">
+                <ng-template pTemplate="caption">
+                  <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
+                    <h5 class="m-0">Rejected Events</h5>
+                    <span class="block mt-2 md:mt-0 p-input-icon-left">
+                      <i class="pi pi-search"></i>
+                      <input pInputText Item="text" (input)="dt.filterGlobal($event.target.value, 'contains')"
+                        placeholder="Search..."/>
+                    </span>
+                  </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                  <tr>
+                    <th pSortableColumn="title"><div class="flex justify-content-center">Title<p-sortIcon field="title"></p-sortIcon></div></th>
+                    <th pSortableColumn="eventDate"><div class="flex justify-content-center">Start Date<p-sortIcon field="eventDate"></p-sortIcon></div>
+                    </th>
+                    <th pSortableColumn="endDate"><div class="flex justify-content-center">End Date<p-sortIcon field="endDate"></p-sortIcon></div>
+                    </th>
+                    <th pSortableColumn="place"><div class="flex justify-content-center">Location<p-sortIcon field="place"></p-sortIcon></div>
+                    </th>
+                    <th pSortableColumn="eventType"><div class="flex justify-content-center">Type<p-sortIcon field="eventType"></p-sortIcon></div>
+                    </th>
+                    <th></th>
+                  </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-event>
+                  <tr>
+                    <tr>
+                      <td style="width:20%; min-width:10rem;">
+                          <span class="p-column-title">title</span>
+                          <div class="flex justify-content-center text-center">{{event?.title}}</div>
+                      </td>
+                      <td style="width:20%; min-width:10rem;">
+                        <span class="p-column-title">eventDate</span>
+                        <div class="flex justify-content-center text-center">{{event?.eventDate | date : "MM/dd/yy"}}</div>
+                      </td>
+                      <td style="width:20%; min-width:10rem;">
+                            <span class="p-column-title">endDate</span>
+                            <div class="flex justify-content-center text-center">{{ event?.endDate | date : "MM/dd/yy" }}</div>
+                      </td>
+                    <td style="width:20%; min-width:10rem;">
+                            <span class="p-column-title">place</span>
+                            <div class="flex justify-content-center text-center">{{event?.place}}</div>
+                    </td>
+                    <td style="width:20%; min-width:10rem;">
+                        <span class="p-column-title">eventType</span>
+                        <div class="flex justify-content-center text-center">{{event?.eventType.title}}</div>
+                    </td>
+                      <td style="width:30%; min-width:10rem;">
+                          <div class="flex justify-content-center text-center">
+                              <button pButton pRipple icon="pi pi-eye" class="p-button-rounded p-button-info mr-2"
+                              (click)="viewEvent(event)"></button>
+                          </div>
+                        </td>
+                  </tr>
+                </ng-template>
+                <!-- empty table message-->
+                <ng-template pTemplate="emptymessage">
+                  <tr>
+                    <td colspan="6" class="text-center">No Event found.</td>
+                  </tr>
+                </ng-template>
+              </p-table>
+
+
+        </p-tabPanel>
+        <p-tabPanel header="Approved" leftIcon="pi pi-check-circle">
+            
+            
+
+            <p-table #dt [value]="approvedEvents" responsiveLayout="scroll"
+                [globalFilterFields]="['title']" [rows]="10" [paginator]="true" [rowsPerPageOptions]="[10,20,30]"
+                [showCurrentPageReport]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                 selectionMode="multiple" [rowHover]="true" dataKey="id">
+                <ng-template pTemplate="caption">
+                  <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
+                    <h5 class="m-0">Approved Events</h5>
+                    <span class="block mt-2 md:mt-0 p-input-icon-left">
+                      <i class="pi pi-search"></i>
+                      <input pInputText Item="text" (input)="dt.filterGlobal($event.target.value, 'contains')"
+                        placeholder="Search..."/>
+                    </span>
+                  </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                  <tr>
+                    <th pSortableColumn="title"><div class="flex justify-content-center">Title<p-sortIcon field="title"></p-sortIcon></div></th>
+                    <th pSortableColumn="eventDate"><div class="flex justify-content-center">Start Date<p-sortIcon field="eventDate"></p-sortIcon></div>
+                    </th>
+                    <th pSortableColumn="endDate"><div class="flex justify-content-center">End Date<p-sortIcon field="endDate"></p-sortIcon></div>
+                    </th>
+                    <th pSortableColumn="place"><div class="flex justify-content-center">Location<p-sortIcon field="place"></p-sortIcon></div>
+                    </th>
+                    <th pSortableColumn="eventType"><div class="flex justify-content-center">Type<p-sortIcon field="eventType"></p-sortIcon></div>
+                    </th>
+                    <th></th>
+                  </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-event>
+                  <tr>
+                    <tr>
+                      <td style="width:20%; min-width:10rem;">
+                          <span class="p-column-title">title</span>
+                          <div class="flex justify-content-center text-center">{{event?.title}}</div>
+                      </td>
+                      <td style="width:20%; min-width:10rem;">
+                        <span class="p-column-title">eventDate</span>
+                        <div class="flex justify-content-center text-center">{{event?.eventDate | date : "MM/dd/yy"}}</div>
+                      </td>
+                      <td style="width:20%; min-width:10rem;">
+                            <span class="p-column-title">endDate</span>
+                            <div class="flex justify-content-center text-center">{{ event?.endDate | date : "MM/dd/yy" }}</div>
+                      </td>
+                    <td style="width:20%; min-width:10rem;">
+                            <span class="p-column-title">place</span>
+                            <div class="flex justify-content-center text-center">{{event?.place}}</div>
+                    </td>
+                    <td style="width:20%; min-width:10rem;">
+                        <span class="p-column-title">eventType</span>
+                        <div class="flex justify-content-center text-center">{{event?.eventType.title}}</div>
+                    </td>
+                      <td style="width:30%; min-width:10rem;">
+                          <div class="flex justify-content-center text-center">
+                              <button pButton pRipple icon="pi pi-eye" class="p-button-rounded p-button-info mr-2"
+                              (click)="viewEvent(event)"></button>
+                          </div>
+                        </td>
+                  </tr>
+                </ng-template>
+                <!-- empty table message-->
+                <ng-template pTemplate="emptymessage">
+                  <tr>
+                    <td colspan="6" class="text-center">No Event found.</td>
+                  </tr>
+                </ng-template>
+              </p-table>
+
+
+        </p-tabPanel>
+        <p-tabPanel header="Rejected" leftIcon="pi pi-times-circle">
+            <p-table #dt [value]="rejectedEvents" responsiveLayout="scroll"
+                [globalFilterFields]="['title']" [rows]="10" [paginator]="true" [rowsPerPageOptions]="[10,20,30]"
+                [showCurrentPageReport]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                 selectionMode="multiple" [rowHover]="true" dataKey="id">
+                <ng-template pTemplate="caption">
+                  <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
+                    <h5 class="m-0">Rejected Events</h5>
+                    <span class="block mt-2 md:mt-0 p-input-icon-left">
+                      <i class="pi pi-search"></i>
+                      <input pInputText Item="text" (input)="dt.filterGlobal($event.target.value, 'contains')"
+                        placeholder="Search..."/>
+                    </span>
+                  </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                  <tr>
+                    <th pSortableColumn="title"><div class="flex justify-content-center">Title<p-sortIcon field="title"></p-sortIcon></div></th>
+                    <th pSortableColumn="eventDate"><div class="flex justify-content-center">Start Date<p-sortIcon field="eventDate"></p-sortIcon></div>
+                    </th>
+                    <th pSortableColumn="endDate"><div class="flex justify-content-center">End Date<p-sortIcon field="endDate"></p-sortIcon></div>
+                    </th>
+                    <th pSortableColumn="place"><div class="flex justify-content-center">Location<p-sortIcon field="place"></p-sortIcon></div>
+                    </th>
+                    <th pSortableColumn="eventType"><div class="flex justify-content-center">Type<p-sortIcon field="eventType"></p-sortIcon></div>
+                    </th>
+                    <th></th>
+                  </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-event>
+                  <tr>
+                    <tr>
+                      <td style="width:20%; min-width:10rem;">
+                          <span class="p-column-title">title</span>
+                          <div class="flex justify-content-center text-center">{{event?.title}}</div>
+                      </td>
+                      <td style="width:20%; min-width:10rem;">
+                        <span class="p-column-title">eventDate</span>
+                        <div class="flex justify-content-center text-center">{{event?.eventDate | date : "MM/dd/yy"}}</div>
+                      </td>
+                      <td style="width:20%; min-width:10rem;">
+                            <span class="p-column-title">endDate</span>
+                            <div class="flex justify-content-center text-center">{{ event?.endDate | date : "MM/dd/yy" }}</div>
+                      </td>
+                    <td style="width:20%; min-width:10rem;">
+                            <span class="p-column-title">place</span>
+                            <div class="flex justify-content-center text-center">{{event?.place}}</div>
+                    </td>
+                    <td style="width:20%; min-width:10rem;">
+                        <span class="p-column-title">eventType</span>
+                        <div class="flex justify-content-center text-center">{{event?.eventType.title}}</div>
+                    </td>
+                      <td style="width:30%; min-width:10rem;">
+                          <div class="flex justify-content-center text-center">
+                              <button pButton pRipple icon="pi pi-eye" class="p-button-rounded p-button-info mr-2"
+                              (click)="viewEvent(event)"></button>
+                          </div>
+                        </td>
+                  </tr>
+                </ng-template>
+                <!-- empty table message-->
+                <ng-template pTemplate="emptymessage">
+                  <tr>
+                    <td colspan="6" class="text-center">No Event found.</td>
+                  </tr>
+                </ng-template>
+              </p-table>
+        </p-tabPanel>
+    </p-tabView>
+</div>
+
+
+<p-dialog [(visible)]="eventStatusDialog" [style]="{width: '50%'}" header="Event Status" [modal]="true" styleClass="p-fluid">
+    <div class="surface-section">
+        <div class="text-500 mb-5">About the event.</div>
+        <ul class="list-none p-0 m-0">
+            <li class="flex align-items-center py-3 px-2 border-top-1 surface-border flex-wrap">
+                <div class="text-500 w-6 md:w-3 font-medium">Title</div>
+                <div class="text-900 w-full md:w-9 md:flex-order-0 flex-order-1">
+                    <div >{{event?.title}}</div>
+                </div>
+            </li>
+            <li class="flex align-items-center py-3 px-2 border-top-1 surface-border flex-wrap">
+                <div class="text-500 w-6 md:w-3 font-medium">Description</div>
+                <div class="text-900 w-full md:w-9 md:flex-order-0 flex-order-1">
+                    <div>{{event?.description}}</div>
+                </div>
+            </li>
+            <li class="flex align-items-center py-3 px-2 border-top-1 surface-border flex-wrap">
+                <div class="text-500 w-6 md:w-3 font-medium">Start Date</div>
+                <div class="text-900 w-full md:w-9 md:flex-order-0 flex-order-1">
+                    <div>{{event?.eventDate | date : "MM/dd/yy"}}</div>
+                </div>
+            </li>
+            <li class="flex align-items-center py-3 px-2 border-top-1 surface-border flex-wrap">
+                <div class="text-500 w-6 md:w-3 font-medium">End Date</div>
+                <div class="text-900 w-full md:w-9 md:flex-order-0 flex-order-1">
+                    <div>{{event?.endDate | date : "MM/dd/yy"}}</div>
+                </div>
+            </li>
+            <li class="flex align-items-center py-3 px-2 border-top-1 surface-border flex-wrap">
+                <div class="text-500 w-6 md:w-3 font-medium">Type</div>
+                <div class="text-900 w-full md:w-9 md:flex-order-0 flex-order-1">
+                    <div>{{event?.eventType.title}}</div>
+                </div>
+            </li>
+            <li class="flex align-items-center py-3 px-2 border-top-1 surface-border flex-wrap">
+                <div class="text-500 w-6 md:w-3 font-medium">Location</div>
+                <div class="text-900 w-full md:w-9 md:flex-order-0 flex-order-1">
+                    <div>{{event?.place}}</div>
+                </div>
+            </li>
+            <li class="flex align-items-center py-3 px-2 border-top-1 surface-border flex-wrap">
+                <div class="text-500 w-6 md:w-3 font-medium">Participants Estimation</div>
+                <div class="text-900 w-full md:w-9 md:flex-order-0 flex-order-1">
+                    <div>{{event?.participantsEstimation}}</div>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div class="text-center text-1000 my-5">Would you approve or reject this request?</div>
+    <ng-template pTemplate="content">
+        <p-selectButton [options]="statusOptions" [(ngModel)]="statusValue" optionLabel="label" optionValue="value"></p-selectButton>
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+        <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="eventStatusDialog = false"></button>
+        <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="saveStatus()"></button>
+    </ng-template>
+</p-dialog>

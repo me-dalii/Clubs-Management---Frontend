@@ -48,9 +48,9 @@
                         <div class="text-500 w-6 md:w-3 font-medium">Status</div>
                         <div class="text-900 w-full md:w-9 md:flex-order-0 flex-order-1">
                             <div *ngIf="dataLoaded">
-                                <p-tag *ngIf="club?.status == true" styleClass="mr-2" icon="pi pi-check" severity="success" value="Active"></p-tag>
-                                <p-tag *ngIf="club?.status == null" styleClass="mr-2" icon="pi pi-clock" severity="warning" value="Under Review"></p-tag>
-                                <p-tag *ngIf="club?.status == false" icon="pi pi-times" severity="danger" value="Inactive"></p-tag>
+                                <p-tag *ngIf="club?.leader?.account?.status == true" styleClass="mr-2" icon="pi pi-check" severity="success" value="Active"></p-tag>
+                                <p-tag *ngIf="club?.leader?.account?.status == null" styleClass="mr-2" icon="pi pi-clock" severity="warning" value="Under Review"></p-tag>
+                                <p-tag *ngIf="club?.leader?.account?.status == false" icon="pi pi-times" severity="danger" value="Inactive"></p-tag>
                             </div>
                             <p-skeleton *ngIf="!dataLoaded" width="5rem" height="1.2rem" ></p-skeleton>
                         </div>

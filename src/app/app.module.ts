@@ -74,6 +74,7 @@ import { TagModule } from 'primeng/tag';
 import {ImageModule} from 'primeng/image';
 import {CardModule} from 'primeng/card';
 import { HttpClientModule } from '@angular/common/http';
+import { EventRequestComponent } from './components/event-request/event-request.component';
 
 @NgModule({
   declarations: [
@@ -96,7 +97,8 @@ import { HttpClientModule } from '@angular/common/http';
     LandingEventComponent,
     MyclubComponent,
     MyeventsComponent,
-    ContainerComponent
+    ContainerComponent,
+    EventRequestComponent
   ],
   imports: [
     BrowserModule,

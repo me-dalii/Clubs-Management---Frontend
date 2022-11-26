@@ -25,7 +25,7 @@ export class LandingClubComponent implements OnInit {
   }
 
   getClubs() {
-    this.clubService.getClubs().subscribe({
+    this.clubService.getApprovedClubs().subscribe({
       next: (response: Club[]) => this.clubs = response,
       error: (e) => this.messageService.add({ severity: 'error', summary: 'Erreur', detail: 'Chargement échoué', life: 3000 }),
       complete: () => console.log(this.clubs)

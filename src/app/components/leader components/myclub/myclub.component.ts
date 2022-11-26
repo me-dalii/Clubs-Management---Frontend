@@ -55,6 +55,7 @@ export class MyclubComponent implements OnInit {
       complete: () => {
         this.dataLoaded = true;
         this.selectedTeacher = this.club.coordinator;
+        console.log(this.club);
       }
     })
   }
