@@ -28,4 +28,18 @@ export class TeacherService {
   public deleteTeacher(id : Number):Observable<Teacher>{
     return this.http.delete<Teacher>(`${this.host}${id}`);
   }
+
+  public getAvailableTeachers(): Observable<Teacher[]>{
+    return this.http.get<Teacher[]>(this.host + "available");
+  }
+
+  public getTotalTeachers(): Observable<number>{
+    return this.http.get<number>(this.host + "count");
+  }
+
+  public getTotalActiveTeachers(): Observable<number>{
+    return this.http.get<number>(this.host + "count/active");
+  }
+
+  
 }

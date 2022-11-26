@@ -75,6 +75,8 @@ import {ImageModule} from 'primeng/image';
 import {CardModule} from 'primeng/card';
 import { HttpClientModule } from '@angular/common/http';
 import { EventRequestComponent } from './components/event-request/event-request.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
+import {BadgeModule} from 'primeng/badge';
 
 @NgModule({
   declarations: [
@@ -98,7 +100,8 @@ import { EventRequestComponent } from './components/event-request/event-request.
     MyclubComponent,
     MyeventsComponent,
     ContainerComponent,
-    EventRequestComponent
+    EventRequestComponent,
+    DashboardComponent
   ],
   imports: [
     BrowserModule,
@@ -155,7 +158,8 @@ import { EventRequestComponent } from './components/event-request/event-request.
     PdfViewerModule,
     TagModule,
     ImageModule,
-    CardModule
+    CardModule,
+    BadgeModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -48,4 +48,12 @@ export class EventService {
   public getRejectedEvents(): Observable<Event[]>{
     return this.http.get<Event[]>(this.host + "rejected");
   }
+
+  public getTotalEvents(): Observable<number>{
+    return this.http.get<number>(this.host + "count");
+  }
+
+  public getTotalApprovedEvents(): Observable<number>{
+    return this.http.get<number>(this.host + "count/approved");
+  }
 }

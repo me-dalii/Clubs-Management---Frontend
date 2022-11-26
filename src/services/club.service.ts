@@ -48,4 +48,13 @@ export class ClubService {
   public getApprovedClubs(): Observable<Club[]>{
     return this.http.get<Club[]>(this.host + "approved");
   }
+
+  public getTotalApprovedClubs(): Observable<number>{
+    return this.http.get<number>(this.host + "count/approved");
+  }
+
+  public getTotalRequestedClubs(): Observable<number>{
+    return this.http.get<number>(this.host + "count/requested");
+  }
+
 }

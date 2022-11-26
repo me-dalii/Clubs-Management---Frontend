@@ -4,6 +4,7 @@ import { LoginComponent } from './components/auth/login/login.component';
 import { RegistrationComponent } from './components/auth/registration/registration.component';
 import { ClubDetailsComponent } from './components/club/club-details/club-details.component';
 import { ClubComponent } from './components/club/club.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { DepartmentComponent } from './components/department/department.component';
 import { EventRequestComponent } from './components/event-request/event-request.component';
 import { EventTypeComponent } from './components/event-type/event-type.component';
@@ -40,6 +41,7 @@ import { AppLayoutComponent } from './layout/app.layout.component';
         {
           path: 'dashboard', component: AppLayoutComponent,
           children:[
+            { path:'', component : DashboardComponent },
             { path:'users', component : UserComponent },
             { path:'roles', component : RoleComponent },
 

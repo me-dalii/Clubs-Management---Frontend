@@ -85,7 +85,7 @@ export class RegistrationComponent implements OnInit {
   }
 
   getTeachers() {
-    this.teacherService.getTeachers().subscribe({
+    this.teacherService.getAvailableTeachers().subscribe({
       next: (response: Teacher[]) => this.teachers = response,
       error: (e) => this.messageService.add({ severity: 'error', summary: 'Erreur', detail: 'Teachers Loading Failed', life: 3000 }),
     })
@@ -128,11 +128,9 @@ export class RegistrationComponent implements OnInit {
       return;
     }
 
-
     //print all form values
     console.log(this.myForm.value);
 
-    
 
     let account : Account ={
       username: this.myForm.get('username').value,
