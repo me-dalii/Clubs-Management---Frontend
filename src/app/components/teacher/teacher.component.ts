@@ -78,7 +78,7 @@ export class TeacherComponent implements OnInit {
     this.teacherService.saveTeacher(this.teacher).subscribe({
       next: (response: Teacher) => {
         this.teacherForm.reset();
-        this.messageService.add({ severity: 'success', summary: 'Succès', detail: 'Teacher Added', life: 3000 });
+        this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Teacher Added', life: 3000 });
         this.getTeachers();
       },
       error: (e) => {
@@ -130,7 +130,7 @@ export class TeacherComponent implements OnInit {
     for (let s of this.selectedTeachers) {
       this.teacherService.deleteTeacher(s.id).subscribe({
         next: (v) => this.getTeachers(),
-        error: (e) => this.messageService.add({ severity: 'error', summary: 'Erreur', detail: 'Delete Failed', life: 3000 }),
+        error: (e) => this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Delete Failed', life: 3000 }),
       })
     }
     this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Deleted Successfully', life: 3000 });

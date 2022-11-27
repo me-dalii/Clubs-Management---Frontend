@@ -93,4 +93,8 @@ export class AuthenticationService {
     }
   }
 
+  public isAdmin(){
+    return this.getAccountRoleFromLocalCache() == "ADMIN";
+  }
+
 }

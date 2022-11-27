@@ -51,6 +51,7 @@ export class RegistrationComponent implements OnInit {
     private router: Router) { }
 
 
+    //validators
   clubNameExistsValidator( control: AbstractControl): { [key: string]: boolean } | null {
     let check = this.clubs.find(i => i.name === control.value);
     return check == null ? null : { clubNameTaken: true };
@@ -152,6 +153,54 @@ export class RegistrationComponent implements OnInit {
       this.myForm.get('coordinator').markAsTouched()
   }
 
+  onSelectLogo(event) {
+    this.logo_file = event.files[0];
+    if(this.logo_file.size <= 1048575){
+      this.myForm.get('logo').setValue('valid')
+    }else{
+      this.myForm.get('logo').reset();
+    }
+  }
+
+  onRemoveLogo(){
+    this.logo_file = null
+    this.myForm.get('logo').setValue(null);
+    this.myForm.get('logo').markAsTouched()
+  }
+
+  onSelectFSBrequest(event) {
+    this.FSBrequest_file = event.files[0];
+    if(this.FSBrequest_file.size <= 1048575){
+      this.myForm.get('FSBrequest').setValue('valid')
+      this.messageService.add({severity: 'info', summary: 'Success', detail: 'FSB request Added'});
+    }else{
+      this.myForm.get('FSBrequest').reset();
+    }
+  }
+
+  onRemoveFSBrequest(){
+    this.FSBrequest_file = null
+    this.myForm.get('FSBrequest').setValue(null);
+    this.myForm.get('FSBrequest').markAsTouched()
+
+  }
+
+  onSelectUCrequest(event) {
+    this.UCrequest_file = event.files[0];
+    if(this.UCrequest_file.size <= 1048575){
+      this.myForm.get('UCrequest').setValue('valid')
+      this.messageService.add({severity: 'info', summary: 'Success', detail: 'UC request Added'});
+    }else{
+      this.myForm.get('UCrequest').reset();
+    }
+  }
+
+  onRemoveUCrequest(){
+    this.UCrequest_file = null
+    this.myForm.get('UCrequest').setValue(null);
+    this.myForm.get('UCrequest').markAsTouched()
+  }
+
   onRegister() {
     this.showLoading = true;
     //touch all fields to trigger validation messages
@@ -159,7 +208,7 @@ export class RegistrationComponent implements OnInit {
     
 
     if(!this.myForm.valid){
-      this.messageService.add({severity:'error', summary:'Erreur', detail:'Please complete all the fields'});
+      this.messageService.add({severity:'error', summary:'Erreur', detail:'Please check and complete all fields'});
       this.showLoading = false;
       return;
     }
@@ -174,13 +223,9 @@ export class RegistrationComponent implements OnInit {
       role : Role.LEADER
     }
 
-    this.showLoading = false;
-
-    return
     this.accountService.saveAccount(account).subscribe({
       next: (response: Account) => {
         account = response;
-        this.messageService.add({ severity: 'success', summary: 'Succès', detail: 'Account Saved', life: 3000 });
         let user : User = {
           firstName: this.myForm.get('firstName').value,
           lastName: this.myForm.get('lastName').value,
@@ -194,7 +239,6 @@ export class RegistrationComponent implements OnInit {
         this.userService.saveUser(user).subscribe({
           next: (response: User) => {
             user = response;
-            this.messageService.add({ severity: 'success', summary: 'Succès', detail: 'User Saved', life: 3000 });
             let club : Club = {
               name: this.myForm.get('name').value,
               description: this.myForm.get('description').value,
@@ -225,89 +269,35 @@ export class RegistrationComponent implements OnInit {
             this.clubService.saveClub(formData).subscribe({
               next: (response: Club) => {
                 club = response;
-                this.messageService.add({ severity: 'success', summary: 'Succès', detail: 'Club Saved', life: 3000 });
                 this.showLoading = false;
-                this.messageService.add({ severity: 'success', summary: 'Succès', detail: 'Club Registered', life: 3000 });
+                this.router.navigate(['/success']);
               },
               error: (e) => {
                 this.showLoading = false;
-                this.messageService.add({ severity: 'error', summary: 'Erreur', detail: 'Club Saving Failed', life: 3000 });
+                console.error("Club Saving Failed");
+                this.router.navigate(['/error']);
               },
               complete: () => {
-                //login
-                this.authenticationService.login(account).subscribe({
-                  next: (response: any) => {
-                    this.authenticationService.saveAccessToken(response.headers.get("access_token"));
-                    this.authenticationService.saveRefreshToken(response.headers.get("refresh_token"));
-                    this.authenticationService.addAccountRoleToLocalCache();
-                    this.router.navigate(['/dashboard']);
-                  },
-                  error: (e) => {
-                    this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Failed Authentication', life: 3000 })
-                  },
-                  complete: () => this.showLoading = false
-                  
-                });
               }
-
             })
-          }
+          },
+          error: (e) => {
+            this.showLoading = false;
+            console.error("User Saving Failed");
+            this.router.navigate(['/error']);
+          },
         })
       },
       error: (e) => {
-        this.messageService.add({ severity: 'error', summary: 'Erreur', detail: 'Failed', life: 3000 });
+        this.showLoading = false;
+        console.error("Account Saving Failed");
+        this.router.navigate(['/error']);
       },
-      complete: () => {}
+      complete: () => {
+        this.showLoading = false;
+      }
     })
 
-  }
-
-  onSelectLogo(event) {
-    this.logo_file = event.files[0];
-    if(this.logo_file.size < 10000000){
-      this.myForm.get('logo').setValue('valid')
-    }else{
-      this.myForm.get('logo').reset();
-    }
-  }
-
-  onRemoveLogo(){
-    this.logo_file = null
-    this.myForm.get('logo').setValue(null);
-    this.myForm.get('logo').markAsTouched()
-  }
-
-  onSelectFSBrequest(event) {
-    this.FSBrequest_file = event.files[0];
-    if(this.FSBrequest_file.size < 10000000){
-      this.myForm.get('FSBrequest').setValue('valid')
-      this.messageService.add({severity: 'info', summary: 'Success', detail: 'FSB request Added'});
-    }else{
-      this.myForm.get('FSBrequest').reset();
-    }
-  }
-
-  onRemoveFSBrequest(){
-    this.FSBrequest_file = null
-    this.myForm.get('FSBrequest').setValue(null);
-    this.myForm.get('FSBrequest').markAsTouched()
-
-  }
-
-  onSelectUCrequest(event) {
-    this.UCrequest_file = event.files[0];
-    if(this.UCrequest_file.size < 10000000){
-      this.myForm.get('UCrequest').setValue('valid')
-      this.messageService.add({severity: 'info', summary: 'Success', detail: 'UC request Added'});
-    }else{
-      this.myForm.get('UCrequest').reset();
-    }
-  }
-
-  onRemoveUCrequest(){
-    this.UCrequest_file = null
-    this.myForm.get('UCrequest').setValue(null);
-    this.myForm.get('UCrequest').markAsTouched()
   }
 
 }

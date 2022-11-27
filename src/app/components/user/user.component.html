@@ -2,7 +2,7 @@
 <div class="grid">
   <div class="col-12">
     <div class="card">
-      <p-toolbar styleClass="mb-1">
+      <!-- <p-toolbar styleClass="mb-1">
         <ng-template pTemplate="left">
           <div class="my-2">
             <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success mr-2"
@@ -11,14 +11,14 @@
               (click)="deleteSelectedUsers()" [disabled]="!selectedUsers|| !selectedUsers?.length"></button>
           </div>
         </ng-template>
-      </p-toolbar>
+      </p-toolbar> -->
       <p-table #dt [value]="users" responsiveLayout="scroll"
         [globalFilterFields]="['firstName,lastName,cin']" [rows]="10" [paginator]="true" [rowsPerPageOptions]="[10,20,30]"
         [showCurrentPageReport]="true" currentPageReportTemplate="Affichage {first} à {last} de {totalRecords} entrées"
         [(selection)]="selectedUsers" selectionMode="multiple" [rowHover]="true" dataKey="id">
         <ng-template pTemplate="caption">
           <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
-            <h5 class="m-0">Manage Users</h5>
+            <h5 class="m-0">Manage Leaders</h5>
             <span class="block mt-2 md:mt-0 p-input-icon-left">
               <i class="pi pi-search"></i>
               <input pInputText Item="text" (input)="dt.filterGlobal($event.target.value, 'contains')"
@@ -69,20 +69,20 @@
                     <span class="p-column-title">phone</span>
                     <div class="flex justify-content-center text-center">{{user?.phone}}</div>
             </td>
-              <td style="width:30%; min-width:10rem;">
-                  <div class="flex justify-content-center text-center">
-                      <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-info mr-2"
-                      (click)="editUser(user)"></button>
-                        <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-danger"
-                      (click)="deleteUser(user)"></button>
-                  </div>
-                </td>
+            <td style="width:30%; min-width:10rem;">
+                <div class="flex justify-content-center text-center">
+                    <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-info mr-2"
+                    (click)="editUser(user)"></button>
+                      <!-- <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-danger"
+                    (click)="deleteUser(user)"></button> -->
+                </div>
+              </td>
           </tr>
         </ng-template>
         <!-- empty table message-->
         <ng-template pTemplate="emptymessage">
           <tr>
-            <td colspan="6" class="text-center">No users found.</td>
+            <td colspan="6" class="text-center">No Leaders found.</td>
           </tr>
         </ng-template>
       </p-table>
@@ -179,7 +179,7 @@
           </small>
         </div>
       </div>
-
+<!-- 
       <div class="field col-12">
         <label for="role">Role *</label>
         <p-dropdown id="role" appendTo="body" [options]="roles" placeholder="Select" optionLabel="name" formControlName="role" ></p-dropdown>
@@ -188,7 +188,7 @@
             Obligatory.
           </small>
         </div>
-      </div>
+      </div> -->
       
     </form>
     </ng-template>

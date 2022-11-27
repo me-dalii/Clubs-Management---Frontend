@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Club } from 'src/app/models/Club';
 import { Event } from 'src/app/models/Event';
+import { AuthenticationService } from 'src/services/authentication.service';
 import { ClubService } from 'src/services/club.service';
 import { EventService } from 'src/services/event.service';
 import { TeacherService } from 'src/services/teacher.service';
@@ -23,7 +24,8 @@ export class DashboardComponent implements OnInit {
   totalActiveTeachers : number;
 
   constructor(private clubService : ClubService, 
-    private teacherService : TeacherService, 
+    private teacherService : TeacherService,
+    public as : AuthenticationService, 
     private eventService : EventService) { }
 
   ngOnInit(): void {
@@ -35,7 +37,7 @@ export class DashboardComponent implements OnInit {
     this.getTotalApprovedEvents();
     this.getTotalTeachers();
     this.getTotalActiveTeachers();
-
+    
   }
 
   getTotalApprovedClubs(){
@@ -88,7 +90,7 @@ export class DashboardComponent implements OnInit {
 
 
   getClubs(){
-    this.clubService.getClubs().subscribe({
+    this.clubService.getApprovedClubs().subscribe({
       next: (response: Club[]) => this.clubs = response,
       error: (e) => console.log(e),
       complete: () => {

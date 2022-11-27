@@ -101,6 +101,7 @@
 
 <p-dialog header="Event Details" [(visible)]="eventDialog" [modal]="true"
     [style]="{width: '70%'}" class="p-fluid">
+    <h2>{{event?.club.name}}</h2>
     <div class="text-500 mb-5">Please complete all required fields marked with an asterisk (*).</div>
     <ng-template pTemplate="content">
     <form [formGroup]="eventForm" class="grid">

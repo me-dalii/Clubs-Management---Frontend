@@ -16,10 +16,10 @@
         <div class="card" >
             <div class="flex align-items-center justify-content-between mb-0">
                 <div class="font-medium text-3xl text-900 mb-3">About</div>
-                <button pButton type="button" icon="pi pi-pencil" class="p-button-text" (click)="editDetailsButton()" ></button>
+                <button pButton type="button" icon="pi pi-pencil" class="p-button-text" (click)="editAboutButton()" ></button>
             </div>
             <div class="surface-section">
-                <div class="text-500 mb-5">About the club details.</div>
+                <div class="text-500 mb-5">About the club.</div>
                 <ul class="list-none p-0 m-0">
                     <li class="flex align-items-center py-3 px-2 border-top-1 surface-border flex-wrap">
                         <div class="text-500 w-6 md:w-3 font-medium">Name</div>
@@ -64,10 +64,10 @@
         <div class="card" >
             <div class="flex align-items-center justify-content-between mb-0">
                 <h5>Leader</h5>
-                <button pButton type="button" icon="pi pi-arrow-right-arrow-left" class="p-button-text" (click)="editDetailsButton()" ></button>
+                <!-- <button pButton type="button" icon="pi pi-arrow-right-arrow-left" class="p-button-text" (click)="editLeader()" ></button> -->
             </div>
             <div class="surface-section">
-                <div class="text-500 mb-5">About the club Leader.</div>
+                <div class="text-500 mb-5">About the club leader.</div>
                 <ul class="list-none p-0 m-0">
                     <li class="flex align-items-center py-3 px-2 border-top-1 surface-border flex-wrap">
                         <div class="text-500 w-6 md:w-3 font-medium">Full Name</div>
@@ -112,7 +112,7 @@
         <div class="card" >
             <div class="flex align-items-center justify-content-between mb-0">
                 <h5>Coordinator</h5>
-                <button pButton type="button" icon="pi pi-arrow-right-arrow-left" class="p-button-text" (click)="editCoordiantorButton()" ></button>
+                <!-- <button pButton type="button" icon="pi pi-arrow-right-arrow-left" class="p-button-text" (click)="editCoordiantorButton()" ></button> -->
             </div>
             <div class="surface-section">
                 <div class="text-500 mb-5">Coordinator Personal Details.</div>
@@ -181,7 +181,6 @@
     <div class="text-500 mb-5">Would you approve or reject this request?</div>
     <ng-template pTemplate="content">
         <p-selectButton [options]="statusOptions" [(ngModel)]="statusValue" optionLabel="label" optionValue="value"></p-selectButton>
-
       </ng-template>
 
     <ng-template pTemplate="footer">
@@ -191,5 +190,47 @@
 </p-dialog>
 
 
+<p-dialog [(visible)]="clubAboutDialog" [style]="{width: '70%'}" header="Club Details" [modal]="true" styleClass="p-fluid">
+    <div class="text-500 mb-5">Please complete all required fields marked with an asterisk (*).</div>
+    <ng-template pTemplate="content">
+        <form [formGroup]="myForm">
+          <div class="field">
+            <label for="name">Name *</label>
+            <input Item="text" pInputText id="name" formControlName="name" placeholder="Club Name" required />
+            <div *ngIf="(myForm.get('name').invalid && myForm.get('name').dirty)">
+              <small class="ng-dirty ng-invalid" *ngIf="myForm.get('name').hasError('required')">
+                Name is required.
+              </small>
+              <small class="ng-dirty ng-invalid" *ngIf="myForm.get('name').hasError('pattern')">
+                Not Valid.
+              </small>
+            </div>
+          </div>
+          <div class="field">
+            <label for="email">Email *</label>
+            <input Item="text" pInputText id="email" formControlName="email" placeholder="Club Email" required />
+            <div *ngIf="(myForm.get('email').invalid && myForm.get('email').dirty)">
+              <small class="ng-dirty ng-invalid" *ngIf="myForm.get('email').hasError('required')">
+                Name is required.
+              </small>
+              <small class="ng-dirty ng-invalid" *ngIf="myForm.get('email').hasError('pattern')">
+                Not Valid.
+              </small>
+            </div>
+          </div>
+          <div class="field">
+            <label for="description">Description *</label>
+            <textarea id="description" rows="5" cols="30" pInputTextarea [autoResize]="true" formControlName="description" placeholder="Club Description"></textarea>
+            <div *ngIf="(myForm.get('description').invalid && myForm.get('description').dirty)">
+              <small class="ng-dirty ng-invalid" *ngIf="myForm.get('description').hasError('required')">Description is required.</small>
+            </div>
+          </div>
+        </form>
+      </ng-template>
 
+    <ng-template pTemplate="footer">
+        <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideAboutDialog()"></button>
+        <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="saveClubAbout()"></button>
+    </ng-template>
+</p-dialog>
 

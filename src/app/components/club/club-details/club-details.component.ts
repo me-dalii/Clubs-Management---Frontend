@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { MessageService } from 'primeng/api';
@@ -33,6 +34,10 @@ export class ClubDetailsComponent implements OnInit {
 
   statusValue : boolean;
 
+  clubAboutDialog : boolean;
+
+  myForm: FormGroup;
+
   constructor(private route: ActivatedRoute, private clubService: ClubService, 
     private accountService: AccountService, 
     private messageService: MessageService,private teacherService : TeacherService,
@@ -44,6 +49,12 @@ export class ClubDetailsComponent implements OnInit {
 
     this.getClub();
 
+    this.myForm = new FormGroup({
+      name: new FormControl('',[Validators.required]),
+      email: new FormControl('',[Validators.required]),
+      description: new FormControl('',[Validators.required]),
+    })
+
     this.statusOptions = [{label: 'Approve', value: true}, {label: 'Reject', value: false}];
   }
 
@@ -52,7 +63,6 @@ export class ClubDetailsComponent implements OnInit {
       next: (response: Club) => this.club = response,
       error: (e) => this.messageService.add({ severity: 'error', summary: 'Erreur', detail: 'Loading Failed', life: 3000 }),
       complete: () => {
-        console.log(this.club);
         this.dataLoaded = true;
         if(this.club.ucrequest != null){
           this.UCrequest_file = this.pdfConverter(this.club.ucrequest);
@@ -64,7 +74,11 @@ export class ClubDetailsComponent implements OnInit {
     })
   }
 
-  editDetailsButton(){
+  editAboutButton(){
+    this.myForm.get('name').setValue(this.club.name);
+    this.myForm.get('email').setValue(this.club.email);
+    this.myForm.get('description').setValue(this.club.description);
+    this.clubAboutDialog = true;
 
   }
 
@@ -73,7 +87,6 @@ export class ClubDetailsComponent implements OnInit {
   }
   
   saveStatus(){
-    console.log(this.statusValue);
     this.accountService.updateAccountStatus(this.club.leader.account.id,this.statusValue).subscribe({
       next: (response: Club) => this.getClub(),
       error: (e) => this.messageService.add({ severity: 'error', summary: 'Erreur', detail: 'Status Update Failed', life: 3000 }),
@@ -107,6 +120,30 @@ export class ClubDetailsComponent implements OnInit {
       next: (response: Teacher[]) => this.teachers = response,
       error: (e) => this.messageService.add({ severity: 'error', summary: 'Erreur', detail: 'Teachers Loading Failed', life: 3000 }),
     })
+  }
+
+  hideAboutDialog(){
+    this.clubAboutDialog = false;
+  }
+
+  saveClubAbout(){
+    let club = this.club;
+    club.name = this.myForm.get('name').value;
+    club.email = this.myForm.get('email').value;
+    club.description = this.myForm.get('description').value;
+
+    this.clubService.saveClubDetails(club).subscribe({
+      next: (response: Club) => this.getClub(),
+      error: (e) => this.messageService.add({ severity: 'error', summary: 'Erreur', detail: 'Club Update Failed', life: 3000 }),
+      complete: () => {
+        this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Club Updated', life: 3000 });
+        this.clubAboutDialog = false;
+      }
+    })
+  }
+
+  editLeader(){
+
   }
 
 }

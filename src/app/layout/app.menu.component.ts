@@ -27,7 +27,7 @@ export class AppMenuComponent implements OnInit {
                             icon: 'pi pi-fw pi-shield',
                             items: [
                                 {
-                                    label: "Users",
+                                    label: "Leaders",
                                     icon: 'pi pi-fw pi-users',
                                     routerLink: ['/dashboard/users']
                                 },

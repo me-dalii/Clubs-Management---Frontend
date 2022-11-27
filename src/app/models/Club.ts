@@ -8,7 +8,6 @@ import { Event } from "./Event";
 export interface Club extends AbstractEntity{
     name? : string;
     description? : string;
-    status? : Boolean;
     email? : string;
 
 

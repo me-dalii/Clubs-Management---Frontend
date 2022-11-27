@@ -77,6 +77,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { EventRequestComponent } from './components/event-request/event-request.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import {BadgeModule} from 'primeng/badge';
+import { ErrorComponent } from './components/auth/error/error.component';
+import { SuccessComponent } from './components/auth/success/success.component';
 
 @NgModule({
   declarations: [
@@ -101,7 +103,9 @@ import {BadgeModule} from 'primeng/badge';
     MyeventsComponent,
     ContainerComponent,
     EventRequestComponent,
-    DashboardComponent
+    DashboardComponent,
+    ErrorComponent,
+    SuccessComponent
   ],
   imports: [
     BrowserModule,

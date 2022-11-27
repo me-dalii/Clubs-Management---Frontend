@@ -1,7 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { ErrorComponent } from './components/auth/error/error.component';
 import { LoginComponent } from './components/auth/login/login.component';
 import { RegistrationComponent } from './components/auth/registration/registration.component';
+import { SuccessComponent } from './components/auth/success/success.component';
 import { ClubDetailsComponent } from './components/club/club-details/club-details.component';
 import { ClubComponent } from './components/club/club.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
@@ -35,7 +37,6 @@ import { AppLayoutComponent } from './layout/app.layout.component';
             { path:'about', component : LandingAboutComponent },
             { path:'clubs', component : LandingClubComponent },
             { path:'events', component : LandingEventComponent },
-
           ]
         },
         {
@@ -61,12 +62,12 @@ import { AppLayoutComponent } from './layout/app.layout.component';
             { path:'my_club', component : MyclubComponent },
             { path:'my_events', component : MyeventsComponent },
             { path:'container', component : ContainerComponent },
-
-
           ]
         },
         {path: 'login', component: LoginComponent},
         {path: 'register', component: RegistrationComponent},
+        {path: 'error', component: ErrorComponent},
+        {path: 'success', component: SuccessComponent},
 
     ], 
     { scrollPositionRestoration: 'enabled', anchorScrolling: 'enabled' })

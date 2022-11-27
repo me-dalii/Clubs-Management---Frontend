@@ -56,8 +56,15 @@ export class UserComponent implements OnInit {
 
   getUsers(){
     this.userService.getUsers().subscribe({
-      next: (response: User[]) => this.users = response,
+      next: (response: User[]) => {
+        this.users = response;
+        console.log(this.users)
+
+      //filter users remove admin
+        this.users = this.users.filter(user => user.account.role != Role.ADMIN)
+      },
       error: (e) => this.messageService.add({ severity: 'error', summary: 'Erreur', detail: 'Loadin failed', life: 3000 }),
+      complete: () => this.users = this.users.filter(user => user.account.role != Role.ADMIN)
     })
   }
 
@@ -83,12 +90,14 @@ export class UserComponent implements OnInit {
       'email': this.userForm.get('email').value,
       'phone': this.userForm.get('phone').value,
       'dob': this.userForm.get('dob').value,
+      'grade' : this.user.grade,
+      'account' : this.user.account
     }
 
     this.userService.saveUser(this.user).subscribe({
       next: (response: User) => {
         this.userForm.reset();
-        this.messageService.add({ severity: 'success', summary: 'Succès', detail: 'User Added', life: 3000 });
+        this.messageService.add({ severity: 'success', summary: 'Success', detail: 'User Added', life: 3000 });
         this.getUsers();
       },
       error: (e) => {
@@ -140,7 +149,7 @@ export class UserComponent implements OnInit {
     for (let s of this.selectedUsers) {
       this.userService.deleteUser(s.id).subscribe({
         next: (v) => this.getUsers(),
-        error: (e) => this.messageService.add({ severity: 'error', summary: 'Erreur', detail: 'Delete Failed', life: 3000 }),
+        error: (e) => this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Delete Failed', life: 3000 }),
       })
     }
     this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Deleted Successfully', life: 3000 });

@@ -106,7 +106,10 @@ export class EventComponent implements OnInit {
       'endDate': this.eventForm.get('endDate').value,
       'place': this.eventForm.get('place').value,
       'participantsEstimation': this.eventForm.get('participantsEstimation').value,
-      'eventType' : this.eventForm.get('type').value
+      'eventType' : this.eventForm.get('type').value,
+      'status' : this.event.status,
+      'club' : this.event.club
+
     }
 
     this.eventService.saveEvent(this.event).subscribe({
