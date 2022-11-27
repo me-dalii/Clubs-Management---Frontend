@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { User } from 'src/app/models/User';
-import { Gender } from 'src/enums/Gender';
 import { Role } from 'src/enums/Role';
 import { RoleService } from 'src/services/role.service';
 import { UserService } from 'src/services/user.service';
@@ -27,9 +26,6 @@ export class UserComponent implements OnInit {
   deleteUserDialog: boolean = false;
   deleteUsersDialog: boolean = false;
 
-  gender = Gender;
-  genders = [];
-
   role = Role;
   roles = [];
 
@@ -41,7 +37,6 @@ export class UserComponent implements OnInit {
 
     this.getUsers();
     
-    this.genders = Object.keys(this.gender);
     this.roles = Object.keys(this.role);
 
 
@@ -113,7 +108,6 @@ export class UserComponent implements OnInit {
     this.userForm.get('email').setValue(user.email)
     this.userForm.get('phone').setValue(user.phone)
     this.userForm.get('dob').setValue(new Date(user.dob))
-    this.userForm.get('gender').setValue(user.gender)
 
     this.userDialog = true;
   }

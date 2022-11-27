@@ -7,8 +7,7 @@
         </ng-template>
 
         <ng-template pTemplate="right">
-            <p-fileUpload mode="basic" accept="image/*" [maxFileSize]="1000000" label="Import" chooseLabel="Import" class="mr-2 inline-block"></p-fileUpload>
-            <button pButton pRipple label="Export" icon="pi pi-upload" class="p-button-help"></button>
+            <!-- <button pButton pRipple label="Export" icon="pi pi-upload" class="p-button-help"></button> -->
         </ng-template>
     </p-toolbar>
 
@@ -41,9 +40,9 @@
                         <!-- <span class="product-price">${{product.price}}</span> -->
                         <p-button icon="pi pi-eye" label="View" (click)="toClub(club)" ></p-button>
 
-                        <p-tag *ngIf="club?.status == true" styleClass="mr-2" icon="pi pi-check" severity="success" value="Active"></p-tag>
-                        <p-tag *ngIf="club?.status == null" styleClass="mr-2" icon="pi pi-clock" severity="warning" value="Under Review"></p-tag>
-                        <p-tag *ngIf="club?.status == false" icon="pi pi-times" severity="danger" value="Inactive"></p-tag>
+                        <p-tag *ngIf="club?.leader.account.status == true" styleClass="mr-2" icon="pi pi-check" severity="success" value="Active"></p-tag>
+                        <p-tag *ngIf="club?.leader.account.status == null" styleClass="mr-2" icon="pi pi-clock" severity="warning" value="Under Review"></p-tag>
+                        <p-tag *ngIf="club?.leader.account.status == false" icon="pi pi-times" severity="danger" value="Inactive"></p-tag>
                         <!-- <span [class]="'product-badge status-' + product.inventoryStatus.toLowerCase()">{{product.inventoryStatus}}</span> -->
                     </div>
                 </div>
@@ -68,9 +67,9 @@
                         <!-- <p-rating [ngModel]="product.rating" [readonly]="true" [cancel]="false"></p-rating> -->
                     </div>
                     <div class="product-grid-item-bottom">
-                        <p-tag *ngIf="club?.status == true" styleClass="mr-2" icon="pi pi-check" severity="success" value="Active"></p-tag>
-                        <p-tag *ngIf="club?.status == null" styleClass="mr-2" icon="pi pi-clock" severity="warning" value="Under Review"></p-tag>
-                        <p-tag *ngIf="club?.status == false" icon="pi pi-times" severity="danger" value="Inactive"></p-tag>
+                        <p-tag *ngIf="club?.leader.account.status == true" styleClass="mr-2" icon="pi pi-check" severity="success" value="Active"></p-tag>
+                        <p-tag *ngIf="club?.leader.account.status == null" styleClass="mr-2" icon="pi pi-clock" severity="warning" value="Under Review"></p-tag>
+                        <p-tag *ngIf="club?.leader.account.status == false" icon="pi pi-times" severity="danger" value="Inactive"></p-tag>
                     </div>
                 </div>
             </div>

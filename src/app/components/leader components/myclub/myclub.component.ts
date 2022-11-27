@@ -104,7 +104,7 @@ export class MyclubComponent implements OnInit {
   }
 
   getTeachers() {
-    this.teacherService.getTeachers().subscribe({
+    this.teacherService.getAvailableTeachers().subscribe({
       next: (response: Teacher[]) => this.teachers = response,
       error: (e) => this.messageService.add({ severity: 'error', summary: 'Erreur', detail: 'Teachers Loading Failed', life: 3000 }),
     })

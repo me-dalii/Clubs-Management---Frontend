@@ -1,4 +1,3 @@
-import { Gender } from "src/enums/Gender";
 import { AbstractEntity } from "./AbstractEntity";
 import { Account } from "./Account";
 import { Club } from "./Club";
@@ -11,7 +10,6 @@ export interface User extends AbstractEntity{
     email? : string;
     phone? : string;
     dob? : Date;
-    gender? : Gender;
 
     account? : Account;
     grade? : Grade;

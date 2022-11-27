@@ -1,48 +1,54 @@
 
 <p-toast></p-toast>
-<div class="surface-0 flex align-items-center justify-content-center min-h-screen min-w-screen overflow-hidden">
+<div class="surface-0 flex align-items-center justify-content-center min-h-screen min-w-screen overflow-hidden backg">
     <div class="grid justify-content-center p-2 lg:p-0" style="min-width:80%">
         <div class="col-12 mt-5  text-center">
             <a href="/" class="text-blue-500">
-                <img src="assets/images/4c.png" alt="TT Image" class="mb-1" style="width:100px; height:70px;">                
+                <img src="assets/images/fsb.png" alt="TT Image" class="mb-1" style="width:250px">                
             </a>
         </div>
 
-        <div class="col-12 xl:col-8 mb-5" style="border-radius:56px; padding:0.3rem; background: linear-gradient(180deg, var(--primary-color) 100%, rgba(243, 33, 33, 0) 30%);">
+        <div class="col-12 xl:col-8 mb-5" style="border-radius:56px; padding:0.3rem; background: black">
             <div class="h-full w-full m-0 py-7 px-4" style="border-radius:53px; background: linear-gradient(180deg, var(--surface-50) 38.9%, var(--surface-0));">
             
                 <div class="text-center mb-5">
                     <div class="text-900 text-3xl font-medium mb-3">Create Your Club</div>
                 </div>
 
-                <div class="text-500 mb-5">Please complete all required fields marked with an asterisk (*).</div>
+                <div class="text-500 mb-1">
+                    <i class="pi pi-exclamation-triangle mr-2"></i>
+                    
+                    Before submiting your request please make sure to download and fill the 
+                    <a href="http://www.fsb.rnu.tn/vie-estudiantine/charte-des-clubs" target="_blank" rel="noopener noreferrer">charts</a>.
+                </div>
+                <div class="text-500 mb-5">
+                    <i class="pi pi-check-circle mr-2"></i>
+                    Please complete all fields.</div>
         
                 <div class="w-full md:w-12 mx-auto">
                     <form [formGroup]="myForm">
-                        <!-- ---hidden--- -->
-                        <div class="field">
-                            <input type="text" hidden pInputText id="code" formControlName="id" />
-                        </div>
     
-                        <h4>Club Details</h4>
+                        <h4>1. Club Details</h4>
                         <div class="p-fluid p-formgrid grid partsHover">
 
                             <div class="field col-12">
                                 <label>Logo</label>
                                 <p-fileUpload class="pt-5" accept="image/png, image/jpeg" (onSelect)="onSelectLogo($event)"
-                                (onRemove)="onRemoveLogo()" [showCancelButton]=true  [showUploadButton]=false>
+                                (onRemove)="onRemoveLogo()" [showCancelButton]=false  [showUploadButton]=false>
                                 </p-fileUpload>
+                                <div class="mt-1" *ngIf="(myForm.get('logo').touched)">
+                                    <small class="ng-dirty ng-invalid" *ngIf="myForm.get('logo').hasError('required')">Chart is required.</small>
+                                </div>
                             </div>
 
                             <div class="field col-12 md:col-6">
-                                <label for="name">Name*</label>
+                                <label for="name">Name</label>
                                 <input id="name" pInputText placeholder="Club Title" type="text" formControlName="name"/>
-                                <!-- <div *ngIf="(myForm.get('name').invalid && myForm.get('name').dirty)">
-                                    <small class="ng-dirty ng-invalid" *ngIf="myForm.get('name').hasError('required')">Name is Required.</small>
-                                </div>
-                                <div *ngIf="myForm.errors?.['nameTaken']">
-                                    <small class="ng-dirty ng-invalid">Name Already Taken.</small>
-                                </div> -->
+                                <div *ngIf="(myForm.get('name').invalid && myForm.get('name').touched)">
+                                    <small class="ng-dirty ng-invalid" *ngIf="myForm.get('name').hasError('required')">Name is required.</small>
+                                    <small class="ng-dirty ng-invalid" *ngIf="myForm.get('name').hasError('pattern')">Incorrect Format.</small>
+                                    <small class="ng-dirty ng-invalid" *ngIf="myForm.get('name').hasError('clubNameTaken')">Name Already Taken.</small>
+                                </div>                                
                             </div>
 
                             <div class="field col-12 md:col-6">
@@ -51,22 +57,23 @@
                                     <span class="p-inputgroup-addon"><i class="pi pi-at"></i></span>
                                     <input id="clubEmail" type="email" formControlName="clubEmail" pInputText placeholder="Club E-mail">         
                                 </div>
-                                <!-- <div *ngIf="(myForm.get('email').invalid && myForm.get('email').dirty)">
-                                    <small class="ng-dirty ng-invalid" *ngIf="myForm.get('email').hasError('required')">E-mail est obligatoire.</small>
-                                    <small class="ng-dirty ng-invalid" *ngIf="myForm.get('email').hasError('email')">Format incorrect.</small>
-                                </div> -->
+                                <div *ngIf="(myForm.get('clubEmail').invalid && myForm.get('clubEmail').touched)">
+                                    <small class="ng-dirty ng-invalid" *ngIf="myForm.get('clubEmail').hasError('required')">E-mail is required.</small>
+                                    <small class="ng-dirty ng-invalid" *ngIf="myForm.get('clubEmail').hasError('email')">Incorrect Format.</small>
+                                </div>
                             </div>
                             <div class="field col-12 md:col-12">
-                                <label for="description">Description *</label>
+                                <label for="description">Description</label>
                                 <textarea id="description" rows="5" cols="30" pInputTextarea 
-                                placeholder="A brief description the clubs concept and objectives." [autoResize]="true" formControlName="description"></textarea>
-                                <!-- <div *ngIf="(myForm.get('description').invalid && myForm.get('description').dirty)">
+                                placeholder="A brief description of the club concept and objectives." [autoResize]="true" formControlName="description"></textarea>
+                                <div *ngIf="(myForm.get('description').invalid && myForm.get('description').touched)">
                                     <small class="ng-dirty ng-invalid" *ngIf="myForm.get('description').hasError('required')">Description is required.</small>
-                                </div> -->
+                                    <small class="ng-dirty ng-invalid" *ngIf="myForm.get('description').hasError('maxlength')">Maximum 255 Character.</small>
+                                </div>
                             </div>
 
                             <div class="field col-12 md:col-12">
-                                <label for="sector">Select a Coordinator*</label>
+                                <label for="sector">Select a Coordinator</label>
                                 <p-table #dt [rowHover]="true" [value]="teachers" selectionMode="single" [(selection)]="selectedTeacher"  [rows]="10" [paginator]="true"
                                  responsiveLayout="scroll" (onRowSelect)="onRowSelect($event)" (onRowUnselect)="onRowUnselect($event)" styleClass="p-datatable-gridlines"
                                 [globalFilterFields]="['firstName','lastName']" dataKey="id"
@@ -111,92 +118,95 @@
                                             </tr>
                                           </ng-template>
                                 </p-table>
-                            </div>
-                            <div class="field col-12 md:col-6">
-                                <label for="document">The Chart of Student Clubs published by the University of Carthage. (PDF)</label>
-                                <p-fileUpload class="pt-5" accept="application/pdf" (onSelect)="onSelectUCrequest($event)"
-                                (onRemove)="onRemoveUCrequest()" [showCancelButton]=true  [showUploadButton]=false>
-                                </p-fileUpload>
+                                <div class="mt-1" *ngIf="(myForm.get('coordinator').touched)">
+                                    <small class="ng-dirty ng-invalid" *ngIf="myForm.get('coordinator').hasError('required')">Coordinator is required.</small>
+                                </div>
                             </div>
 
                             <div class="field col-12 md:col-6">
-                                <label for="document">The Chart of Student Clubs published by the FSB. (PDF)</label>
-                                <p-fileUpload class="pt-5" accept="application/pdf" (onSelect)="onSelectFSBrequest($event)"
-                                (onRemove)="onRemoveFSBrequest()" [showCancelButton]=true [showUploadButton]=false>
+                                <label for="document">The Chart of Student Clubs published by the University of Carthage. (PDF)</label>
+                                <p-fileUpload class="pt-5" accept="application/pdf" (onSelect)="onSelectUCrequest($event)"
+                                (onRemove)="onRemoveUCrequest()" [showCancelButton]=false  [showUploadButton]=false>
                                 </p-fileUpload>
+                                <div class="mt-1" *ngIf="(myForm.get('UCrequest').touched)">
+                                    <small class="ng-dirty ng-invalid" *ngIf="myForm.get('UCrequest').hasError('required')">Chart is required.</small>
+                                </div>
+                            </div>
+
+                            <div class="field col-12 md:col-6">
+                                <label for="document">The Chart of Student Clubs published by the Faculty of Science of Bizerte. (PDF)</label>
+                                <p-fileUpload class="pt-5" accept="application/pdf" (onSelect)="onSelectFSBrequest($event)"
+                                (onRemove)="onRemoveFSBrequest()" [showCancelButton]=false [showUploadButton]=false>
+                                </p-fileUpload>
+                                <div class="mt-1" *ngIf="(myForm.get('FSBrequest').touched)">
+                                    <small class="ng-dirty ng-invalid" *ngIf="myForm.get('FSBrequest').hasError('required')">Chart is required.</small>
+                                </div>
                             </div>
 
                         </div>
                         
-                        <h4>Leader Details</h4>
+                        <h4>2. Leader Details</h4>
                         <div class="p-fluid p-formgrid grid partsHover">
-                            <div class="field col-12 md:col-3">
-                                <label for="firstName">First Name*</label>
+                            <div class="field col-12 md:col-4">
+                                <label for="firstName">First Name</label>
                                 <input id="firstName" pInputText placeholder="First Name" type="text" formControlName="firstName"/>
-                                <!-- <div *ngIf="(myForm.get('firstName').invalid && myForm.get('firstName').dirty)">
-                                    <small *ngIf="myForm.get('directorLastName').hasError('required')">Nom est obligatoire.</small>
-                                    <small *ngIf="myForm.get('directorLastName').hasError('pattern')">Nom invalide.</small>
-                                </div> -->
+                                <div *ngIf="(myForm.get('firstName').invalid && myForm.get('firstName').touched)">
+                                    <small *ngIf="myForm.get('firstName').hasError('required')">First Name is Required.</small>
+                                    <small *ngIf="myForm.get('firstName').hasError('pattern')">Invalid.</small>
+                                </div>
                             </div>
                             <div class="field col-12 md:col-4">
-                                <label for="lastName">Last Name*</label>
+                                <label for="lastName">Last Name</label>
                                 <input id="lastName" pInputText placeholder="Last Name" type="text" formControlName="lastName"/>
-                                <!-- <div *ngIf="(myForm.get('directorFirstName').invalid && myForm.get('directorFirstName').dirty)">
-                                    <small *ngIf="myForm.get('directorFirstName').hasError('required')">Prénom est obligatoire.</small>
-                                    <small *ngIf="myForm.get('directorFirstName').hasError('pattern')">Prénom invalide.</small>
-                                </div> -->
+                                <div *ngIf="(myForm.get('lastName').invalid && myForm.get('lastName').touched)">
+                                    <small *ngIf="myForm.get('lastName').hasError('required')">Last Name is Required.</small>
+                                    <small *ngIf="myForm.get('lastName').hasError('pattern')">Invalid.</small>
+                                </div>
                             </div>
-                            <div class="field col-12 md:col-3">
-                                <label for="cin">CIN*</label>
+                            <div class="field col-12 md:col-4">
+                                <label for="cin">CIN</label>
                                 <input id="cin" pInputText placeholder="Identity Card Number" type="text" formControlName="cin"/>
-                                <!-- <div *ngIf="(myForm.get('directorFirstName').invalid && myForm.get('directorFirstName').dirty)">
-                                    <small *ngIf="myForm.get('directorFirstName').hasError('required')">Prénom est obligatoire.</small>
-                                    <small *ngIf="myForm.get('directorFirstName').hasError('pattern')">Prénom invalide.</small>
-                                </div> -->
-                            </div>
-                            <div class="field col-12 md:col-2">
-                                <label for="gender">Gender*</label>
-                                <p-dropdown id="gender" appendTo="body" [options]="genders" placeholder="Select" formControlName="gender"></p-dropdown>
-                                <!-- <div *ngIf="(myForm.get('directorPhone').invalid && myForm.get('directorPhone').dirty)">
-                                    <small *ngIf="myForm.get('directorPhone').hasError('pattern')">Numéro de téléphone invalide.</small>
-                                    <small class="ng-dirty ng-invalid" *ngIf="myForm.get('directorPhone').hasError('required')">Numéro de téléphone est obligatoire.</small>
-                                </div> -->
+                                <div *ngIf="(myForm.get('cin').invalid && myForm.get('cin').touched)">
+                                    <small *ngIf="myForm.get('cin').hasError('required')">CIN is Required.</small>
+                                    <small *ngIf="myForm.get('cin').hasError('cinExists')">CIN Already Exist.</small>
+                                    <small *ngIf="myForm.get('cin').hasError('pattern')">Invalid Format.</small>
+                                </div>
                             </div>
                             <div class="field col-12 md:col-3">
-                                <label for="dob">Date of Birth*</label>
+                                <label for="dob">Date of Birth</label>
                                 <p-calendar formControlName="dob" [showIcon]="true" placeholder="dd/mm/yyyy" inputId="icon" dateFormat="dd-mm-yy"></p-calendar>
-                                <!-- <div *ngIf="(myForm.get('directorPhone').invalid && myForm.get('directorPhone').dirty)">
-                                    <small *ngIf="myForm.get('directorPhone').hasError('pattern')">Numéro de téléphone invalide.</small>
-                                    <small class="ng-dirty ng-invalid" *ngIf="myForm.get('directorPhone').hasError('required')">Numéro de téléphone est obligatoire.</small>
-                                </div> -->
+                                <div *ngIf="(myForm.get('dob').invalid && myForm.get('dob').dirty)">
+                                    <small class="ng-dirty ng-invalid" *ngIf="myForm.get('dob').hasError('required')">Date of Birth is Required.</small>
+                                    <small class="ng-dirty ng-invalid" *ngIf="myForm.get('dob').hasError('ageRange')">Invalid Age.</small>
+                                </div>
                             </div>
                             
                             
-                            <div class="field col-12 md:col-6">
-                                <label for="email">E-Mail*</label>
+                            <div class="field col-12 md:col-5">
+                                <label for="email">E-Mail</label>
                                 <div class="p-inputgroup">
                                     <span class="p-inputgroup-addon"><i class="pi pi-at"></i></span>
                                     <input id="email" type="email" formControlName="email" pInputText placeholder="e-mail">         
                                 </div>
-                                <!-- <div *ngIf="(myForm.get('directorEmail').invalid && myForm.get('directorEmail').dirty)">
-                                    <small class="ng-dirty ng-invalid" *ngIf="myForm.get('directorEmail').hasError('email')">Format incorrect.</small>
-                                    <small class="ng-dirty ng-invalid" *ngIf="myForm.get('directorEmail').hasError('required')">Email est obligatoire.</small>
-                                </div> -->
+                                <div *ngIf="(myForm.get('email').invalid && myForm.get('email').touched)">
+                                    <small class="ng-dirty ng-invalid" *ngIf="myForm.get('email').hasError('required')">E-mail is Required.</small>
+                                    <small class="ng-dirty ng-invalid" *ngIf="myForm.get('email').hasError('email')">Incorrect Format.</small>
+                                </div>
                             </div>
-                            <div class="field col-12 md:col-3">
-                                <label for="phone">Phone*</label>
+                            <div class="field col-12 md:col-4">
+                                <label for="phone">Phone</label>
                                 <div class="p-inputgroup">
                                     <span class="p-inputgroup-addon"><i class="pi pi-phone"></i></span>
                                     <p-inputNumber id="phone" mode="decimal" placeholder="Phone Number" [useGrouping]="false" formControlName="phone">
                                     </p-inputNumber>
                                 </div>
-                                <!-- <div *ngIf="(myForm.get('directorPhone').invalid && myForm.get('directorPhone').dirty)">
-                                    <small *ngIf="myForm.get('directorPhone').hasError('pattern')">Numéro de téléphone invalide.</small>
-                                    <small class="ng-dirty ng-invalid" *ngIf="myForm.get('directorPhone').hasError('required')">Numéro de téléphone est obligatoire.</small>
-                                </div> -->
+                                <div *ngIf="(myForm.get('phone').invalid && myForm.get('phone').touched)">
+                                    <small *ngIf="myForm.get('phone').hasError('pattern')">Invalid.</small>
+                                    <small *ngIf="myForm.get('phone').hasError('required')">Phone is Required.</small>
+                                </div>
                             </div>
                             <div class="field col-12 md:col-12">
-                                <label for="grade">Grade*</label>
+                                <label for="grade">Grade</label>
                                 <p-dropdown appendTo="body" [options]="grades" formControlName="grade" optionLabel="title" [filter]="true" filterBy="title" [showClear]="true" 
                                 placeholder="Select a Grade">
                                     <ng-template pTemplate="selectedItem">
@@ -210,43 +220,55 @@
                                         </div>
                                     </ng-template>
                                 </p-dropdown>
+                                <div *ngIf="(myForm.get('grade').invalid && myForm.get('grade').touched)">
+                                    <small class="ng-dirty ng-invalid" *ngIf="myForm.get('grade').hasError('required')">Grade is Required.</small>
+                                  </div>
                             </div>
                             
                         </div>
 
-                        <h4>Account Details</h4>
+                        <h4>3. Account Details</h4>
                         <div class="p-fluid p-formgrid grid partsHover">
                         <div class="field col-12 md:col-12">
-                            <label for="username">Username*</label>
+                            <label for="username">Username</label>
                             <div class="p-inputgroup">
                                 <span class="p-inputgroup-addon"><i class="pi pi-user"></i></span>
                                 <input type="text" id="username" pInputText placeholder="Username" formControlName="username">         
                             </div>
-                            <!-- <div *ngIf="(myForm.get('username').invalid && myForm.get('username').dirty)">
+                            <div *ngIf="(myForm.get('username').invalid && myForm.get('username').touched)">
                                 <small *ngIf="myForm.get('username').hasError('required')">Username is Required.</small>
+                                <small *ngIf="myForm.get('username').hasError('usernameExists')">Username Already Exist.</small>
+
                             </div>
-                            <div *ngIf="myForm.errors?.['usernameTaken']">
-                                <small class="ng-dirty ng-invalid">Already Exist!!.</small>
-                            </div> -->
                         </div>
-                        <div class="field col-12 md:col-6">
-                            <label for="password1">Password*</label>
-                            <p-password [feedback]="false" id="password1" placeholder="Password" [toggleMask]="true"
-                                styleClass="p-password p-component p-inputwrapper p-input-icon-right" formControlName="password">
+                        <div class="field col-12 md:col-12">
+                            <label for="password1">Password</label>
+                            <p-password id="password1" formControlName="password" placeholder="Password">
+                                <ng-template pTemplate="header">
+                                    <h6>Pick a password</h6>
+                                </ng-template>
+                                <ng-template pTemplate="footer">
+                                    <p-divider></p-divider>
+                                    <p class="mt-2">Suggestions</p>
+                                    <ul class="pl-2 ml-2 mt-0" style="line-height: 1.5">
+                                        <li>At least one lowercase</li>
+                                        <li>At least one uppercase </li>
+                                        <li>At least one numeric</li>
+                                        <li>At least one special character</li>
+                                        <li>Minimum 8 characters</li>
+                                    </ul>
+                                </ng-template>
                             </p-password>
-                        </div>
-                        <div class="field col-12 md:col-6">
-                            <label for="password2">Confirm Password*</label>
-                            <p-password [feedback]="false" id="password2" placeholder="Confirm Password" formControlName="confirmPassword"
-                              styleClass="p-password p-component p-inputwrapper p-input-icon-right" [toggleMask]="true"></p-password>
-                              <!-- <div *ngIf="myForm.errors?.['notmatched'] && (myForm.touched || myForm.dirty)">
-                                <small class="ng-dirty ng-invalid">Mot de passe ne correspond pas.</small>
-                              </div> -->
+                            <div *ngIf="(myForm.get('password').invalid && myForm.get('password').touched)">
+                                <small *ngIf="myForm.get('password').hasError('required')">Username is Required.</small>
+                                <small *ngIf="myForm.get('password').hasError('passwordStrength')">Weak Password.</small>
+
+                            </div>
                         </div>
                     </div>
     
                     </form>
-                    <p-button label="Register" iconPos="right" [loading]="showLoading" 
+                    <p-button label="Submit" iconPos="right" [loading]="showLoading" 
                         (click)="onRegister()" icon="pi pi-user" styleClass="w-full"></p-button>
 
                 </div>

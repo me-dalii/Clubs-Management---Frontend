@@ -139,7 +139,7 @@
         </div>
       </div>
 
-      <div class="field col-9">
+      <div class="field col-12">
         <label for="dob">Date of Birth *</label>
         <p-calendar id="dob" appendTo="body" [showIcon]="true" dateFormat="dd/mm/yy" [showButtonBar]="true" placeholder="jj/MM/aaaa"
                   formControlName="dob"></p-calendar>
@@ -153,15 +153,6 @@
         </div>
       </div>
 
-      <div class="field col-3">
-        <label for="gender">Gender *</label>
-        <p-dropdown id="gender" appendTo="body" [options]="genders" placeholder="Select" formControlName="gender"></p-dropdown>
-        <div *ngIf="(userForm.get('gender').invalid && userForm.get('gender').dirty)">
-          <small class="ng-dirty ng-invalid" *ngIf="userForm.get('dob').hasError('required')">
-            Obligatory.
-          </small>
-        </div>
-      </div>
 
       <div class="field col-8">
         <label for="email">Email *</label>

@@ -99,7 +99,7 @@ export class DashboardComponent implements OnInit {
   }
 
   getEvents(){
-    this.eventService.getEvents().subscribe({
+    this.eventService.getApprovedEvents().subscribe({
       next: (response: Event[]) => this.events = response,
       error: (e) => console.log(e),
       complete: () => {
@@ -107,9 +107,8 @@ export class DashboardComponent implements OnInit {
         this.clubs.forEach(club => {
           club.events = this.events.filter(event => event.club.id == club.id);
         });
-
-        //sort Clubs by number of Club events
-        this.clubs.sort((a, b) => (a.events.length < b.events.length) ? 1 : -1)
+        //sort Clubs by number of Club approved events
+        this.clubs.sort((a,b) => b.events.filter(event => event.status == true).length - a.events.filter(event => event.status == true).length); 
         //get the first 5 Clubs
         if(this.clubs.length > 5){
           this.clubs = this.clubs.slice(0, 5);

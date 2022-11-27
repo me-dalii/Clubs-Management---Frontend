@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { Teacher } from 'src/app/models/Teacher';
-import { Gender } from 'src/enums/Gender';
 import { TeacherService } from 'src/services/teacher.service';
 
 @Component({
@@ -24,14 +23,11 @@ export class TeacherComponent implements OnInit {
 
   teacherForm: FormGroup;
 
-  gender = Gender;
-  genders = [];
 
   constructor(private messageService: MessageService, private teacherService : TeacherService) { }
 
   ngOnInit(): void {
     this.getTeachers();
-    this.genders = Object.keys(this.gender);
 
     this.teacherForm = new FormGroup({
       id: new FormControl(''),
@@ -77,7 +73,6 @@ export class TeacherComponent implements OnInit {
       'email': this.teacherForm.get('email').value,
       'phone': this.teacherForm.get('phone').value,
       'dob': this.teacherForm.get('dob').value,
-      'gender' : this.teacherForm.get('gender').value
     }
 
     this.teacherService.saveTeacher(this.teacher).subscribe({
@@ -103,7 +98,6 @@ export class TeacherComponent implements OnInit {
     this.teacherForm.get('email').setValue(teacher.email)
     this.teacherForm.get('phone').setValue(teacher.phone)
     this.teacherForm.get('dob').setValue(new Date(teacher.dob))
-    this.teacherForm.get('gender').setValue(teacher.gender)
 
     this.teacherDialog = true;
   }
