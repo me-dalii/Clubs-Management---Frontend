@@ -65,4 +65,9 @@ export class LandingComponent implements OnInit {
     let dwn = new Blob([uint8Array])
     return this.sanitizer.bypassSecurityTrustResourceUrl(URL.createObjectURL(dwn));
   }
+
+  scroll(to){
+    let el = document.getElementById(to);
+    el.scrollIntoView({behavior:"smooth"});
+  }
 }

@@ -79,6 +79,11 @@ export class AppMenuComponent implements OnInit {
                                 }
                             ]
                         },
+                        {
+                            label: 'Container',
+                            icon: 'pi pi-fw pi-table',
+                            routerLink: ['/dashboard/container']
+                        },
                     ]
                 },
     
@@ -103,7 +108,7 @@ export class AppMenuComponent implements OnInit {
                         {
                             label: 'Container',
                             icon: 'pi pi-fw pi-table',
-                            routerLink: ['/dashboard/container']
+                            routerLink: ['/dashboard/my_container']
                         },
                     ]
                 },

@@ -15,12 +15,12 @@
                         </a>
                     </li>
                     <li>
-                        <a (click)="router.navigate(['/about'])" pRipple class="flex m-0 md:ml-5 px-0 py-3 text-900 font-medium line-height-3">
+                        <a (click)="scroll('about')" pRipple class="flex m-0 md:ml-5 px-0 py-3 text-900 font-medium line-height-3">
                             <span>About</span>
                         </a>
                     </li>
                     <li>
-                        <a (click)="router.navigate(['/clubs'])" pRipple class="flex m-0 md:ml-5 px-0 py-3 text-900 font-medium line-height-3">
+                        <a (click)="scroll('clubs')" pRipple class="flex m-0 md:ml-5 px-0 py-3 text-900 font-medium line-height-3">
                             <span>Clubs</span>
                         </a>
                     </li>
@@ -59,7 +59,7 @@
                 <img src="assets/images/cover.png" alt="Image" class="md:ml-auto block md:h-full" style="clip-path: polygon(8% 0, 100% 0%, 100% 100%, 0 100%)">
             </div>
         </div>
-        <div id="highlights" class="py-4 px-4 lg:px-8 mx-0 my-6 lg:mx-8">
+        <div id="about" class="py-4 px-4 lg:px-8 mx-0 my-6 lg:mx-8">
             <div class="text-center">
                 <h2 class="text-900 font-normal mb-2">About</h2>
                 <span class="text-600 text-xl">Work Environment.</span>
@@ -93,7 +93,7 @@
                 </div>
             </div>
         </div>
-        <div id="features" class="py-4 px-4 lg:px-8 mt-1 mx-0 lg:mx-8">
+        <div id="clubs" class="py-4 px-4 lg:px-8 mt-1 mx-0 lg:mx-8">
             <div class="grid justify-content-center">
                 <div class="col-12 text-center mt-8 mb-4">
                     <h2 class="text-900 font-normal mb-2">Active Clubs</h2>

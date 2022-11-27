@@ -62,14 +62,10 @@ import { LoginComponent } from './components/auth/login/login.component';
 import { RegistrationComponent } from './components/auth/registration/registration.component';
 import { GradeComponent } from './components/grade/grade.component';
 import { DepartmentComponent } from './components/department/department.component';
-import { LandingClubComponent } from './components/landing/landing-club/landing-club.component';
-import { LandingHomeComponent } from './components/landing/landing-home/landing-home.component';
 import { ClubDetailsComponent } from './components/club/club-details/club-details.component';
-import { LandingAboutComponent } from './components/landing/landing-about/landing-about.component';
 import { LandingEventComponent } from './components/landing/landing-event/landing-event.component';
 import { MyclubComponent } from './components/leader components/myclub/myclub.component';
 import { MyeventsComponent } from './components/leader components/myevents/myevents.component';
-import { ContainerComponent } from './components/leader components/container/container.component';
 import { TagModule } from 'primeng/tag';
 import {ImageModule} from 'primeng/image';
 import {CardModule} from 'primeng/card';
@@ -79,6 +75,8 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import {BadgeModule} from 'primeng/badge';
 import { ErrorComponent } from './components/auth/error/error.component';
 import { SuccessComponent } from './components/auth/success/success.component';
+import { MycontainerComponent } from './components/leader components/mycontainer/mycontainer.component';
+import { ContainerComponent } from './components/container/container.component';
 
 @NgModule({
   declarations: [
@@ -94,18 +92,16 @@ import { SuccessComponent } from './components/auth/success/success.component';
     RegistrationComponent,
     GradeComponent,
     DepartmentComponent,
-    LandingClubComponent,
-    LandingHomeComponent,
     ClubDetailsComponent,
-    LandingAboutComponent,
     LandingEventComponent,
     MyclubComponent,
     MyeventsComponent,
-    ContainerComponent,
     EventRequestComponent,
     DashboardComponent,
     ErrorComponent,
-    SuccessComponent
+    SuccessComponent,
+    MycontainerComponent,
+    ContainerComponent
   ],
   imports: [
     BrowserModule,
